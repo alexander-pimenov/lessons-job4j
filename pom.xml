@@ -65,6 +65,8 @@
 		<module>chapter_chess_HipNoR</module>
         <module>chapter_designPatterns</module>
         <module>chapter_chess_shirokov</module>
+		<module>chapter_tutorial</module>
+        <module>chapter_stream_api</module>
     </modules>
 
 	<build>
