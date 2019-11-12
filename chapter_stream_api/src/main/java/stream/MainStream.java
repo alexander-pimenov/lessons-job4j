@@ -12,6 +12,7 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.stream.Collectors;
@@ -855,6 +856,16 @@ public class MainStream {
                 (x, y) -> x + y); //method reference (Integer::sum)
 
         System.out.println("sumPricePredicate " + sumPricePredicate);
+
+        System.out.println("==========");
+        System.out.println("=== Пример с функцией высшего порядка ===");
+        //Функции высшего порядка принимают другие функции в качестве своих параметров
+        //или возвращают другие функции в качестве своих результатов.
+        Function<Integer, Integer> f = v -> v + 3;
+        BiFunction<Function<Integer, Integer>, Integer, Integer> g =
+                (func, v) -> func.apply(v) * func.apply(v);
+        System.out.println(g.apply(f, 7)); //100 => (v+3)*(v+3) => (7+3)*(7+3)=100
+
 
     }
 }
