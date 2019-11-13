@@ -27,18 +27,20 @@ public class MainStream {
         Collection<String> collection = Arrays.asList("a1", "a2", "a3");
         Stream<String> streamFromCollection = collection.stream();
         System.out.println("streamFromCollection = " +
-                streamFromCollection.collect(Collectors.toList()));
+                streamFromCollection
+                        .collect(Collectors.toList())); //streamFromCollection = [a1, a2, a3]
 
         //Создание стрима из значений: Stream.of(значение1,… значениеN)
         Stream<String> streamFromValues = Stream.of("a1", "a2", "a3");
         System.out.println("streamFromValues = " +
-                streamFromValues.collect(Collectors.toList()));
+                streamFromValues.collect(Collectors.toList())); //streamFromValues = [a1, a2, a3]
 
         //Создание стрима из массива: Arrays.stream(массив)
         String[] array = {"a1", "a2", "a3"};
         Stream<String> streamFromArrays = Arrays.stream(array);
         System.out.println("streamFromArrays = " +
-                streamFromArrays.collect(Collectors.toList()));
+                streamFromArrays
+                        .collect(Collectors.toList())); //streamFromArrays = [a1, a2, a3]
 
         //Создание стрима из файла (каждая строка в файле будет отдельным элементом в стриме)
         //Files.lines(путь_к_файлу)
@@ -54,7 +56,7 @@ public class MainStream {
         out.close();
 
         Stream<String> streamFromFile = Files.lines(Paths.get(file.getAbsolutePath()));
-        System.out.println("streamFromFile = " + streamFromFile.collect(Collectors.toList()));
+        System.out.println("streamFromFile = " + streamFromFile.collect(Collectors.toList())); //streamFromFile = [a1, a2, a3]
 
         //Создание стрима из строки: «строка».chars()
         IntStream streamFromString = "123".chars();
@@ -71,28 +73,32 @@ public class MainStream {
                 .add("a2").add("a3").build();
 
         System.out.println("streamFromBuilder = " +
-                streamFromBuilder.collect(Collectors.toList()));
+                streamFromBuilder
+                        .collect(Collectors.toList())); //streamFromBuilder = [a1, a2, a3]
 
         //Создание параллельного стрима: collection.parallelStream()
         Stream<String> parallelStream = collection.parallelStream();
-        System.out.println("parallelStream = " + parallelStream.collect(Collectors.toList()));
+        System.out.println("parallelStream = " + parallelStream.collect(Collectors.toList())); //parallelStream = [a1, a2, a3]
 
         //Создание бесконечных стрима с помощью Stream.iterate:
         //Stream.iterate(начальное_условие, выражение_генерации)
         //Выражение n -> n + 1, это просто аналог выражения Integer func(Integer n) { return n+1;} обернутого в анонимный класс
         Stream<Integer> streamFromIterate = Stream.iterate(1, n -> n + 1);
-        System.out.println("streamFromIterate = " + streamFromIterate.limit(3).collect(Collectors.toList()));
+        System.out.println("streamFromIterate = " + streamFromIterate
+                .limit(3)
+                .collect(Collectors.toList())); //streamFromIterate = [1, 2, 3]
 
         //Создание бесконечных стрима с помощью Stream.generate
         //Stream.generate(выражение_генерации)
         //Выражение () -> «a1» аналог выражения String func() { return «a1»;} обернутого в анонимный класс
         Stream<String> streamFromGenerate = Stream.generate(() -> "a1");
-        System.out.println("streamFromGenerate = " + streamFromGenerate.limit(3)
-                .collect(Collectors.toList()));
+        System.out.println("streamFromGenerate = " + streamFromGenerate
+                .limit(3)
+                .collect(Collectors.toList())); //streamFromGenerate = [a1, a1, a1]
 
         //Создать пустой стрим
         Stream<String> streamEmpty = Stream.empty();
-        System.out.println("streamEmpty = " + streamEmpty.collect(Collectors.toList()));
+        System.out.println("streamEmpty = " + streamEmpty.collect(Collectors.toList())); //streamEmpty = []
 
         System.out.println("==========");
 
@@ -116,7 +122,7 @@ public class MainStream {
         Stream.of(1, null, 2, null, 3, 4)
                 .flatMap(Stream::ofNullable)
                 .map(v -> String.format(" %s", v))
-                .forEach(System.out::print);
+                .forEach(System.out::print); // 1 2 3 4
         System.out.println();
 
         System.out.println("==========");
@@ -173,7 +179,9 @@ public class MainStream {
         //Вернуть количество вхождений объекта «a1»
         //Возвращает количество элементов стрима.
         System.out.println("***Пример с count() - Возвращает количество элементов стрима.***");
-        long count = collectionSource.stream().filter("a1"::equals).count();
+        long count = collectionSource.stream()
+                .filter("a1"::equals)
+                .count();
         System.out.println(count);
         //2
         System.out.println("==========");
@@ -202,33 +210,52 @@ public class MainStream {
 
 
         //Вернуть первый элемент коллекции или 0, если коллекция пуста.
-        String s = collectionSource.stream().findFirst().orElse(String.valueOf(0));
-        System.out.println(s);
+        String s = collectionSource.stream()
+                .findFirst()
+                .orElse(String.valueOf(0));
+        System.out.println(s); //a1
 
         //Вернуть последний элемент коллекции или «empty», если коллекция пуста
-        String e = collectionSource.stream().skip(collectionSource.size() - 1).findAny().orElse("empty");
-        System.out.println(e);
+        String e = collectionSource.stream()
+                .skip(collectionSource.size() - 1)
+                .findAny()
+                .orElse("empty");
+        System.out.println(e); //a1
 
         //Найти элемент в коллекции равный «a3» или кинуть ошибку
         //Выражение «a3»::equals это аналог boolean func(s) { return «a3».equals(s);}
-        String s1 = collectionSource.stream().filter("a3"::equals).findFirst().get();
-        System.out.println(s1);
+        String s1 = collectionSource.stream()
+                .filter("a3"::equals)
+                .findFirst()
+                .get();
+        System.out.println(s1); //a3
 
         //Вернуть третий элемент коллекции по порядку
-        String s2 = collectionSource.stream().skip(2).findFirst().get();
-        System.out.println(s2);
+        String s2 = collectionSource.stream()
+                .skip(2)
+                .findFirst()
+                .get();
+        System.out.println(s2); //a3
 
         //Вернуть два элемента начиная со второго
-        Object[] objects = collectionSource.stream().skip(1).limit(2).toArray();
-        List<String> collect = collectionSource.stream().skip(1).limit(2).collect(Collectors.toList());
-        System.out.println(Arrays.toString(objects));
-        System.out.println(collect);
+        Object[] objects = collectionSource.stream()
+                .skip(1)
+                .limit(2)
+                .toArray();
+        List<String> collect = collectionSource.stream()
+                .skip(1)
+                .limit(2)
+                .collect(Collectors.toList());
+        System.out.println(Arrays.toString(objects)); //[a2, a3]
+        System.out.println(collect); //[a2, a3]
 
         //Выбрать все элементы по шаблону
         //Выражение (s) -> s.contains(«1») это аналог boolean func(str) { return str.contains(«1»);}
-        List<String> collect1 = collectionSource.stream().filter(str ->
-                str.contains("1")).collect(Collectors.toList());
-        System.out.println(collect1);
+        List<String> collect1 = collectionSource.stream()
+                .filter(str ->
+                str.contains("1"))
+                .collect(Collectors.toList());
+        System.out.println(collect1); //[a1, a1]
 
         /*3. Примеры использования distinct*/
         //Метод distinct возвращает stream без дубликатов, при этом для упорядоченного стрима
@@ -238,10 +265,16 @@ public class MainStream {
         Collection<String> nonOrdered = new HashSet<>(ordered);
 
         //Получение коллекции без дубликатов
-        List<String> distinct = nonOrdered.stream().distinct().collect(Collectors.toList());
+        List<String> distinct = nonOrdered.stream()
+                .distinct()
+                .collect(Collectors.toList());
+        //distinct = [a1, a2, a3]
         System.out.println("distinct = " + distinct);//порядок не гарантируется
 
-        List<String> distinctOrdered = ordered.stream().distinct().collect(Collectors.toList());
+        List<String> distinctOrdered = ordered.stream()
+                .distinct()
+                .collect(Collectors.toList());
+        //distinctOrdered = [a1, a2, a3]
         System.out.println("distinctOrdered = " + distinctOrdered);//порядок гарантируется
 
         /*4. Примеры использования Match функций (anyMatch, allMatch, noneMatch)
@@ -251,18 +284,22 @@ public class MainStream {
         // Метод allMatch - возвращает true, если условие выполняется для всех элементов
 
         //найти существуют ли хоть одно совпадение с шаблоном в коллекции
-        boolean isAnyOneTrue = collectionSource.stream().anyMatch("a1"::equals);
-        System.out.println("isAnyOneTrue = " + isAnyOneTrue);
-        boolean isAnyOneFalse = collectionSource.stream().anyMatch("a8"::equals);
-        System.out.println("isAnyOneTrue = " + isAnyOneTrue);
+        boolean isAnyOneTrue = collectionSource.stream()
+                .anyMatch("a1"::equals);
+        System.out.println("isAnyOneTrue = " + isAnyOneTrue); //isAnyOneTrue = true
+        boolean isAnyOneFalse = collectionSource.stream()
+                .anyMatch("a8"::equals);
+        System.out.println("isAnyOneTrue = " + isAnyOneTrue); //isAnyOneTrue = true
 
         //найти существуют ли все совпадения с шаблоном в коллекции
-        boolean isAll = collectionSource.stream().allMatch(el -> el.contains("1"));
-        System.out.println("isAll = " + isAll);
+        boolean isAll = collectionSource.stream()
+                .allMatch(el -> el.contains("1"));
+        System.out.println("isAll = " + isAll); //isAll = false
 
         //сравнение на неравенство
-        boolean isNotEquals = collectionSource.stream().noneMatch("a7"::equals);
-        System.out.println("isNotEquals = " + isNotEquals);
+        boolean isNotEquals = collectionSource.stream()
+                .noneMatch("a7"::equals);
+        System.out.println("isNotEquals = " + isNotEquals); //isNotEquals = true
         System.out.println("==========");
 
         /*5. Примеры использования map функций (map, mapToInt, flatMap, flatMapToInt)*/
@@ -276,7 +313,7 @@ public class MainStream {
                 .map(Integer::parseInt)//преобразовали в числа 3,4,5,6
                 .map(z -> z + 10)//добавили к каждому числу по 10
                 .map(v -> String.format(" %s", v))
-                .forEach(System.out::print);
+                .forEach(System.out::print); //13 14 15 16
         System.out.println();
 
         System.out.println("==========");
@@ -284,7 +321,7 @@ public class MainStream {
         Stream.of(120, 410, 85, 32, 314, 12)
                 .map(v -> v + 11)
                 .map(v -> String.format(" %s", v))
-                .forEach(System.out::print);
+                .forEach(System.out::print); //131 421 96 43 325 23
         System.out.println();
         System.out.println("==========");
 
@@ -292,7 +329,7 @@ public class MainStream {
         Stream.of("10", "11", "12")
                 .map(v -> Integer.parseInt(v, 16))//здесь имеем Stream<Integer> в 16-ти ричном отображении
                 .map(v -> String.format(" %s", v))//преобразуем для красивого вывода
-                .forEach(System.out::print);
+                .forEach(System.out::print); //16 17 18
         System.out.println();
         System.out.println("==========");
 
@@ -303,7 +340,7 @@ public class MainStream {
         List<String> transform = collection1.stream()
                 .map(el1 -> el1 + "_1")
                 .collect(Collectors.toList());
-        System.out.println("transform = " + transform);
+        System.out.println("transform = " + transform); //transform = [a1_1, a2_1, a3_1, a1_1]
 
         //В первой коллекции убрать первый символ и вернуть массив чисел (int[])
         //или так с mapToInt:
@@ -371,8 +408,7 @@ public class MainStream {
                     }
                 })
                 .map(v -> String.format(" %s", v))
-                .forEach(System.out::print);
-        // 1 3 9 18 4 6 36 72
+                .forEach(System.out::print); //1 0 3 9 18 4 0 6 36 72
         // 1 0 3 9 18 4 0 6 36 72
         System.out.println();
         System.out.println("===========");
@@ -383,17 +419,17 @@ public class MainStream {
         System.out.println("***метод ofNullable***");
         String strRand = Math.random() > 0.5 ? "I'm feeling lucky" : null;
         Stream.ofNullable(strRand)
-                .forEach(System.out::println);
+                .forEach(System.out::println); //будет или пусто или "I'm feeling lucky"
         System.out.println("===========");
 
         //Stream.iterate(seed, predicate, next) - по сути это for цикл с индексом.
         System.out.println("***метод iterate()***");
         Stream.iterate(0, i -> i < 10, i -> i + 1)
                 .map(v -> String.format(" %s", v))
-                .forEach(System.out::print);
+                .forEach(System.out::print); //0 1 2 3 4 5 6 7 8 9
         System.out.println();
         System.out.println("===========");
-        //0 1 2 3 4 5 6 7 8 9
+
         System.out.println("***метод iterate(), как for()***");
         Stream.iterate(2, x -> x < 25, x -> x + 6)
                 .forEach(System.out::println);
@@ -412,19 +448,19 @@ public class MainStream {
         List<String> sorted = collection4.stream()
                 .sorted()
                 .collect(Collectors.toList());
-        System.out.println("sorted = " + sorted);
+        System.out.println("sorted = " + sorted); //sorted = [a1, a1, a2, a2, a3, a4, a5]
         //Отсортировать коллекцию строк по алфавиту в обратном порядке
         List<String> sortedReverse = collection4.stream()
                 .sorted((o1, o2) -> o2.compareTo(o1))
                 .collect(Collectors.toList());
-        System.out.println("sortedReverse = " + sortedReverse);
+        System.out.println("sortedReverse = " + sortedReverse); //sortedReverse = [a5, a4, a3, a2, a2, a1, a1]
 
         //Отсортировать коллекцию строк по алфавиту и убрать дубликаты
         List<String> sortedDistinct = collection4.stream()
                 .sorted()
                 .distinct()
                 .collect(Collectors.toList());
-        System.out.println("sortedDistinct = " + sortedDistinct);
+        System.out.println("sortedDistinct = " + sortedDistinct); //sortedDistinct = [a1, a2, a3, a4, a5]
         System.out.println("===========");
 
         /*7. Примеры использования Max и Min функций*/
@@ -433,11 +469,11 @@ public class MainStream {
         //Найти максимальное значение среди коллекции строк
         //Comparator для строк String::compareTo
         String max = collection4.stream().max(String::compareTo).get();
-        System.out.println("max = " + max);
+        System.out.println("max = " + max); //max = a5
 
         //Найти минимальное значение среди коллекции строк
         String min = collection4.stream().min(String::compareTo).get();
-        System.out.println("min = " + min);
+        System.out.println("min = " + min); //min = a1
         //Пример с объектами:
         //Найдем человека с максимальным возрастом	peoples.stream().max((p1, p2) -> p1.getAge().compareTo(p2.getAge())).get()
 
@@ -456,22 +492,26 @@ public class MainStream {
         System.out.print("forEach = ");
         collection5.stream()
                 .map(String::toUpperCase)
-                .forEach(p -> System.out.print(p + ","));
+                .forEach(p -> System.out.print(p + ",")); //forEach = AA1,AA2,AA3,AA4,AA1,
         System.out.println();
 
-        Collection<StringBuilder> stringBuilders = Arrays.asList(new StringBuilder("a1"), new StringBuilder("a2"),
+        Collection<StringBuilder> stringBuilders = Arrays.asList(
+                new StringBuilder("a1"),
+                new StringBuilder("a2"),
                 new StringBuilder("a3"));
-        Collection<StringBuilder> stringBuilders2 = Arrays.asList(new StringBuilder("a1"), new StringBuilder("a2"),
+        Collection<StringBuilder> stringBuilders2 = Arrays.asList(
+                new StringBuilder("a1"),
+                new StringBuilder("a2"),
                 new StringBuilder("a3"));
 
         stringBuilders.stream().forEachOrdered(p -> p.append("_new"));
-        System.out.println("forEachOrdered = " + stringBuilders);
+        System.out.println("forEachOrdered = " + stringBuilders); //forEachOrdered = [a1_new, a2_new, a3_new]
 
         // Метод Peek возвращает тот же стрим, но при этом применяет указанный метод к каждому элементу стрима
         System.out.print("peak1 = ");
         List<String> peek = collection5.stream()
                 .map(String::toUpperCase)
-                .peek(p -> System.out.print(p + ","))
+                .peek(p -> System.out.print(p + ","))  //peak1 = AA1,AA2,AA3,AA4,AA1,
                 .collect(Collectors.toList());
         System.out.println();
 
@@ -479,7 +519,7 @@ public class MainStream {
         List<StringBuilder> newListPeek = stringBuilders2.stream()
                 .peek(p -> p.append("_new"))
                 .collect(Collectors.toList());
-        System.out.println("newListPeek = " + newListPeek);
+        System.out.println("newListPeek = " + newListPeek); //newListPeek = [a1_new, a2_new, a3_new]
 
         /*9. Примеры использования Reduce функции*/
         /*Метод reduce позволяет выполнять агрегатные функции над всей коллекцией
@@ -498,7 +538,7 @@ public class MainStream {
         Integer summ = intCollection.stream()
                 .reduce((o1, o2) -> o1 + o2)
                 .orElse(0);
-        System.out.println("summ = " + summ);
+        System.out.println("summ = " + summ); //summ = 15
 
         //Вернуть максимум или -1
         //или так:
@@ -507,25 +547,26 @@ public class MainStream {
         Integer max2 = intCollection.stream()
                 .reduce((p1, p2) -> p1 > p2 ? p1 : p2)
                 .orElse(-1);
-        System.out.println("max2 = " + max2);
+        System.out.println("max2 = " + max2);//max2 = 4
 
         //Вернуть минимум или 0
         Integer min2 = intCollection.stream()
                 .reduce((p1, p2) -> p1 < p2 ? p1 : p2)
                 .orElse(-1);
-        System.out.println("min2 = " + min2);
+        System.out.println("min2 = " + min2); //min2 = 1
 
         //Вернуть сумму нечетных чисел или 0
-        Integer sumOdd = intCollection.stream().filter(o -> o % 2 != 0)
+        Integer sumOdd = intCollection.stream()
+                .filter(o -> o % 2 != 0)
                 .reduce((p1, p2) -> p1 + p2)
                 .orElse(0);
-        System.out.println("sumOdd = " + sumOdd);
+        System.out.println("sumOdd = " + sumOdd); //sumOdd = 7
 
         //Вернуть последний элемент или 0
         Integer lastItem = intCollection.stream()
                 .reduce((p1, p2) -> p2)
                 .orElse(0);
-        System.out.println("lastItem = " + lastItem);
+        System.out.println("lastItem = " + lastItem); //lastItem = 3
 
         //Старым методом, без stream API:
         /*
@@ -576,28 +617,29 @@ public class MainStream {
                 .collect(Collectors.summingInt(p -> p % 2 == 1 ? p : 0));
         //можно так:
         //Integer collectSumOdd = numbers.stream().mapToInt(p -> p % 2 == 1 ? p : 0).sum();
-        System.out.println("collectSumOdd = " + collectSumOdd);
+        System.out.println("collectSumOdd = " + collectSumOdd);//collectSumOdd = 9
 
         //Вычесть от каждого элемента 1 и получить среднее
         Double collectAverag = numbers.stream()
                 .collect(Collectors.averagingInt(p -> p - 1));
-        System.out.println("collectAverag = " + collectAverag);
+        System.out.println("collectAverag = " + collectAverag); //collectAverag = 2.5
 
         //Прибавить к числам 3 и получить статистику summarizingInt
         IntSummaryStatistics collectStatistic = numbers.stream()
                 .collect(Collectors.summarizingInt(p -> p + 3));
         System.out.println("collectStatistic = " + collectStatistic);
+        //результат: collectStatistic = IntSummaryStatistics{count=6, sum=39, min=4, average=6,500000, max=9}
 
         // Получить сумму четных чисел через IntSummaryStatistics
         long sumEven = numbers.stream()
                 .collect(Collectors.summarizingInt(p -> p % 2 == 0 ? p : 0))
                 .getSum();
-        System.out.println("sumEven = " + sumEven);
+        System.out.println("sumEven = " + sumEven); //sumEven = 12
 
         //Разделить числа на четные и нечетные
         Map<Boolean, List<Integer>> collectPartition = numbers.stream()
                 .collect(Collectors.partitioningBy(p -> p % 2 == 0));
-        System.out.println("collectPartition = " + collectPartition);
+        System.out.println("collectPartition = " + collectPartition); //collectPartition = {false=[1, 3, 5], true=[2, 4, 6]}
 
         //Другой исходный массив
         Collection<String> strings = Arrays.asList("a1", "b2", "c3", "a4", "a1", "b2");
@@ -606,12 +648,12 @@ public class MainStream {
         String[] toArray = strings.stream().distinct()
                 .map(String::toUpperCase)
                 .toArray(String[]::new);
-        System.out.println("toArray = " + Arrays.toString(toArray));
+        System.out.println("toArray = " + Arrays.toString(toArray)); //toArray = [A1, B2, C3, A4]
 
         // Объединить все элементы в одну строку через разделитель : и обернуть тегами <b> ... </b>
         String collectJoin = strings.stream()
                 .collect(Collectors.joining(" : ", "<b>", "<b>"));
-        System.out.println("collectJoin = " + collectJoin);
+        System.out.println("collectJoin = " + collectJoin); //collectJoin = <b>a1 : b2 : c3 : a4 : a1 : b2<b>
 
 //        // Преобразовать в map, где первый символ ключ, второй символ значение
 //        Map<String, String> map = strings.stream().distinct()
@@ -640,21 +682,21 @@ public class MainStream {
         // можно передать Function.identity().
         Map<Integer, Integer> map1 = Stream.of(1, 2, 3, 4, 5)
                 .collect(Collectors.toMap(Function.identity(), Function.identity()));
-        System.out.println(map1);
+        System.out.println(map1); //{1=1, 2=2, 3=3, 4=4, 5=5}
 
         Map<Integer, String> map2 = Stream.of(1, 2, 3)
                 .collect(Collectors.toMap(
                         Function.identity(),
                         i -> String.format("%d * 2 = %d", i, i * 2)
                 ));
-        System.out.println(map2);
+        System.out.println(map2); //{1=1 * 2 = 2, 2=2 * 2 = 4, 3=3 * 2 = 6}
 
         Map<Character, String> map3 = Stream.of(50, 54, 55)
                 .collect(Collectors.toMap(
                         i -> (char) i.intValue(),
                         i -> String.format("<%d>", i)
                 ));
-        System.out.println(map3);
+        System.out.println(map3); //{2=<50>, 6=<54>, 7=<55>}
 
         //toMap​(Function keyMapper, Function valueMapper, BinaryOperator mergeFunction)
         //Аналогичен первой версии метода, только в случае, когда встречается два
@@ -668,7 +710,7 @@ public class MainStream {
                         i -> String.format("<%d>", i),
                         (a, b) -> String.join(", ", a, b)
                 ));
-        System.out.println(map4);
+        System.out.println(map4); //{0=<50>, <55>, <20>, 2=<52>, 4=<69>, <19>}
 
         /*11. Примеры*/
         //Дан массив аргументов. Нужно получить Map, где каждому ключу будет соответствовать своё значение.
@@ -795,6 +837,7 @@ public class MainStream {
 //        phoneStream.forEach(System.out::println);
 
         System.out.println("===== Список телефонов со скидкой =====");
+        System.out.println("===== Пример с flatMap() =====");
 
         phoneStream
                 .flatMap(p -> Stream.of(
