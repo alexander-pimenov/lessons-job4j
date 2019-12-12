@@ -2,7 +2,6 @@ package ru.job4j.jdbc.store;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**

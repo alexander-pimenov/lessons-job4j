@@ -15,6 +15,7 @@ import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.IntFunction;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -253,7 +254,7 @@ public class MainStream {
         //Выражение (s) -> s.contains(«1») это аналог boolean func(str) { return str.contains(«1»);}
         List<String> collect1 = collectionSource.stream()
                 .filter(str ->
-                str.contains("1"))
+                        str.contains("1"))
                 .collect(Collectors.toList());
         System.out.println(collect1); //[a1, a1]
 
@@ -331,7 +332,62 @@ public class MainStream {
                 .map(v -> String.format(" %s", v))//преобразуем для красивого вывода
                 .forEach(System.out::print); //16 17 18
         System.out.println();
-        System.out.println("==========");
+        System.out.println("============");
+
+        Map<Integer, List<String>> map3 = Stream.of("ab", "c", "def", "gh", "ijk", "mnop")
+                .collect(Collectors.groupingBy(
+                        String::length,
+                        LinkedHashMap::new,
+                        Collectors.mapping(
+                                String::toUpperCase,
+                                Collectors.toList())
+                ));
+        map3.entrySet().forEach(System.out::println);
+        //2=[AB, GH]
+        //1=[C]
+        //3=[DEF, IJK]
+        //4=[MNOP]
+        System.out.println("============");
+        Map<Integer, String> map2 = Stream.of("ab", "c", "def", "gh", "ijk", "mnop")
+                .collect(Collectors.groupingBy(
+                        String::length,
+                        Collectors.mapping(
+                                String::toUpperCase,
+                                Collectors.joining("-")) //если не ставить delimiter то будет вывод слитный
+                ));
+        map2.entrySet().forEach(System.out::println);
+        System.out.println("============");
+        Map<Integer, List<String>> map1 = Stream.of("ab", "c", "def", "gh", "ijk", "mnop")
+                .collect(Collectors.groupingBy(
+                        String::length
+                ));
+        map1.entrySet().forEach(System.out::println);
+        System.out.println("============");
+
+        IntStream.range(1, 5)
+                .flatMap(i -> IntStream.generate(() -> i)
+                        .limit(i))
+                .forEach(System.out::println);
+        // 1, 2, 2, 3, 3, 3, 4, 4, 4, 4
+        System.out.println("============");
+
+        IntStream.range(-5, 0)
+                .flatMap(i -> IntStream.of(i, -i))
+                .sorted()
+                .boxed() //необходим int=Integer, чтоб потом перевести в String
+                .map(v -> String.format(" %s", v)) //красиво выведем потом с пробелами
+                .forEach(System.out::println);
+        // -5, -4, -3, -2, -1, 1, 2, 3, 4, 5
+        System.out.println("============");
+
+        IntStream.range(-5, 0)
+                .flatMap(i -> IntStream.of(i, -i))
+                .boxed()
+                .sorted(Comparator.comparing(Math::abs))
+                .map(v -> String.format(" %s", v)) //красиво выведем потом с пробелами
+                .forEach(System.out::print);
+        // -1, 1, -2, 2, -3, 3, -4, 4, -5, 5
+
 
         //Исходная коллекция
         Collection<String> collection1 = Arrays.asList("a1", "a2", "a3", "a1");
@@ -680,23 +736,23 @@ public class MainStream {
         //значение, основываясь на результате функций keyMapper и valueMapper
         //соответственно. Если нужно вернуть тот же элемент, что и пришел, то
         // можно передать Function.identity().
-        Map<Integer, Integer> map1 = Stream.of(1, 2, 3, 4, 5)
+        Map<Integer, Integer> map11 = Stream.of(1, 2, 3, 4, 5)
                 .collect(Collectors.toMap(Function.identity(), Function.identity()));
-        System.out.println(map1); //{1=1, 2=2, 3=3, 4=4, 5=5}
+        System.out.println(map11); //{1=1, 2=2, 3=3, 4=4, 5=5}
 
-        Map<Integer, String> map2 = Stream.of(1, 2, 3)
+        Map<Integer, String> map22 = Stream.of(1, 2, 3)
                 .collect(Collectors.toMap(
                         Function.identity(),
                         i -> String.format("%d * 2 = %d", i, i * 2)
                 ));
-        System.out.println(map2); //{1=1 * 2 = 2, 2=2 * 2 = 4, 3=3 * 2 = 6}
+        System.out.println(map22); //{1=1 * 2 = 2, 2=2 * 2 = 4, 3=3 * 2 = 6}
 
-        Map<Character, String> map3 = Stream.of(50, 54, 55)
+        Map<Character, String> map33 = Stream.of(50, 54, 55)
                 .collect(Collectors.toMap(
                         i -> (char) i.intValue(),
                         i -> String.format("<%d>", i)
                 ));
-        System.out.println(map3); //{2=<50>, 6=<54>, 7=<55>}
+        System.out.println(map33); //{2=<50>, 6=<54>, 7=<55>}
 
         //toMap​(Function keyMapper, Function valueMapper, BinaryOperator mergeFunction)
         //Аналогичен первой версии метода, только в случае, когда встречается два
@@ -792,7 +848,8 @@ public class MainStream {
                 .flatMap(i -> IntStream.of(i, i + 6))
                 .boxed()
                 .sorted(Comparator.comparing(Math::abs))
-                .forEach(System.out::println);
+                .map(v -> String.format(" %s", v)) //для последующего красивого вывода
+                .forEach(System.out::print);
         //1 -1 2 -2 3 -3 4 -4 5 -5
         System.out.println("==========");
 
@@ -807,6 +864,60 @@ public class MainStream {
         //2=2
         //3=3
         //4=4
+
+        //извлеките уникальные слова, отсортированные ASC из списка фраз:
+
+        System.out.println("===Извлечение уникальных слов, отсортированные ASC из списка фраз===");
+
+        List<String> phrases = Arrays.asList(
+                "sporadic perjury daddy",
+                "confounded skimming mammy",
+                "incumbent jailer daddy",
+                "confounded jailer mammy");
+
+        List<String> uniqueWords = phrases
+                .stream()
+                .flatMap(phrase -> Stream.of(phrase.split(" +"))) //Stream.of(phrase.split(" +") - означает, создать стрим из
+                //phrase, взять каждое слово разделенное пробелом или несколькими пробелами
+                //" +" - указывает что есть разделитель пробел или пробелы
+                .distinct()
+                .sorted()
+                .collect(Collectors.toList());
+        System.out.println("Unique words: " + uniqueWords);
+        //Unique words: [confounded, daddy, incumbent, jailer, mammy, perjury, skimming, sporadic]
+
+        System.out.println("==========");
+
+        /*Очень простой пример: разделить список полных имен, чтобы получить список имен, независимо от того, первый или последний*/
+        System.out.println("===Разделить список полных имен, чтобы получить список имен==");
+
+        List<String> fullNames = Arrays.asList("Barry Allen", "Bruce Wayne", "Clark Kent", "Peter Jackson");
+
+        fullNames.stream()
+                .flatMap(fullName -> Pattern.compile(" ").splitAsStream(fullName))
+                .forEach(System.out::println);
+        //Barry
+        //Allen
+        //Bruce
+        //Wayne
+        //Clark
+        //Kent
+        //Peter
+        //Jackson
+
+        System.out.println("===Разделить список полных имен, чтобы получить список имен, затем отсортировать по ASC==");
+
+        List<String> fullNames2 = Arrays.asList("Barry Allen", "Bruce Wayne", "Clark Kent", "Peter Jackson");
+
+        fullNames2.stream()
+                .flatMap(fullName -> Pattern.compile(" +").splitAsStream(fullName))
+                .map(v -> String.format(" %s", v)) //для красивого вывода в строку с пробелами
+                .sorted()
+                .forEach(System.out::print);
+        //Allen Barry Bruce Clark Jackson Kent Peter Wayne
+
+        System.out.println();
+        System.out.println("==========");
 
         //Таблица умножения
         System.out.println("========= Таблица Умножения ==========");

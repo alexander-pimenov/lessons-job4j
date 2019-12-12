@@ -1,13 +1,11 @@
 package ru.job4j.io.zip;
 
 import org.apache.commons.cli.*;
-import ru.job4j.tracker.ConsoleInput;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;

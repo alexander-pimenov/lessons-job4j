@@ -1,7 +1,5 @@
 package ru.job4j.tutorial.stack_queue;
 
-import javax.imageio.plugins.tiff.TIFFImageReadParam;
-import java.util.TreeMap;
 import java.util.concurrent.ArrayBlockingQueue;
 
 /**

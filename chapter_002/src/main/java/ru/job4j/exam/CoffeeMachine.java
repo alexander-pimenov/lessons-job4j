@@ -1,6 +1,5 @@
 package ru.job4j.exam;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CoffeeMachine {

@@ -1,4 +1,4 @@
-package ru.job4j.stream.onCats;
+package ru.job4j.stream.oncats;
 
 public class Cat {
     private String name;
@@ -40,10 +40,9 @@ public class Cat {
 
     @Override
     public String toString() {
-        return "Cat{" +
-                "name='" + name + '\'' +
-                ", age=" + age +
-                ", color='" + color + '\'' +
-                '}';
+        return "Cat{"
+                + "name='" + name + '\''
+                + ", age=" + age
+                + ", color='" + color + '\'' + '}';
     }
 }

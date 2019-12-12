@@ -1,4 +1,4 @@
-package ru.job4j.stream.onFile;
+package ru.job4j.stream.onfile;
 
 import java.io.File;
 import java.io.IOException;

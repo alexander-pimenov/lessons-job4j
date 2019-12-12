@@ -2,7 +2,6 @@ package ru.job4j.set;
 
 import org.junit.Before;
 import org.junit.Test;
-import ru.job4j.list.MyList;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

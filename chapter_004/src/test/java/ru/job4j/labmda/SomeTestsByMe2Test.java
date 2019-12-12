@@ -1,8 +1,7 @@
 package ru.job4j.labmda;
 
 import org.junit.Test;
-import java.util.Arrays;
-import java.util.List;
+
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 

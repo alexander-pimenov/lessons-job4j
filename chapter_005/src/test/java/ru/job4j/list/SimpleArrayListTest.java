@@ -3,8 +3,6 @@ package ru.job4j.list;
 import org.junit.Test;
 import org.junit.Before;
 
-import java.util.NoSuchElementException;
-
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;

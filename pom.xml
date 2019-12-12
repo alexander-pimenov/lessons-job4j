@@ -67,6 +67,8 @@
         <module>chapter_chess_shirokov</module>
 		<module>chapter_tutorial</module>
         <module>chapter_stream_api</module>
+        <module>chapter_skillbox</module>
+        <module>chapter_dropbox</module>
     </modules>
 
 	<build>
@@ -131,15 +133,18 @@
 				</executions>
 			</plugin>
 			<plugin>
+				<!--Эти настройки указывают на версию плагина-->
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.8.2</version>
 				<executions>
+					<!--Эти настройки запускают задачу анализа кода на покрытие-->
 					<execution>
 						<goals>
 							<goal>prepare-agent</goal>
 						</goals>
 					</execution>
+					<!--Эти настройки запускают задачу проверки кода после запуска команды mvn test-->
 					<execution>
 						<id>report</id>
 						<phase>test</phase>
@@ -286,11 +291,12 @@
 			<artifactId>quartz</artifactId>
 			<version>2.3.0</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.quartz-scheduler/quartz -->
+
+		<!--https://github.com/dropbox/dropbox-sdk-java-->
 		<dependency>
-			<groupId>org.quartz-scheduler</groupId>
-			<artifactId>quartz</artifactId>
-			<version>2.3.0</version>
+			<groupId>com.dropbox.core</groupId>
+			<artifactId>dropbox-core-sdk</artifactId>
+			<version>3.1.1</version>
 		</dependency>
 
 	</dependencies>

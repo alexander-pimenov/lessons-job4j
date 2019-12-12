@@ -1,8 +1,6 @@
 package ru.job4j.io;
 
 import java.io.*;
-import java.lang.reflect.Array;
-import java.util.Arrays;
 
 /**
  * CheckNumber
