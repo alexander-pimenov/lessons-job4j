@@ -46,7 +46,9 @@ public class IteratorArrayTest {
         //Приводим к типу Integer, т.к. метод возвращает Object
         //Если использовать Generic, то было бы проще.
         it.next();
+        //it.hasNext();
         int result = (Integer) it.next();
+        //it.hasNext();
 
         //Блок утверждения: Block assert.
         //Производим проверку реального значения result и ожидаемого значения,
