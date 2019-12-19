@@ -2,33 +2,44 @@ package ru.job4j.generic.services;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-//import static org.hamcrest.CoreMatchers.is;
-//import static org.junit.Assert.*;
-
 public class SimpleArrayTest {
 
     @Test
-    public void whenAddTwoStringElementsShouldGetTwoStringElements() {
+    public void whenAddTwoStringElementsShouldSeeTwoStringElementsInArray() {
         SimpleArray<String> simpleArray = new SimpleArray<>(5);
 
         simpleArray.add("qq");
         simpleArray.add("aa");
+        //System.out.println(simpleArray);
 
-        String[] result = new String[2];
+        String[] expected = {"qq", "aa", null, null, null};
+        //System.out.println(Arrays.toString(expected));
+
+        assertThat(simpleArray.toString(), is(Arrays.toString(expected)));
+    }
+
+    @Test
+    public void whenAddThreeStringElementsShouldGetThreeStringElements() {
+        SimpleArray<String> simpleArray = new SimpleArray<>(3);
+
+        simpleArray.add("qq");
+        simpleArray.add("aa");
+        simpleArray.add("zz");
+
+        String[] result = new String[3];
         result[0] = simpleArray.get(0); // "qq"
         result[1] = simpleArray.get(1); // "aa"
-        String[] expected = {"qq", "aa"};
+        result[2] = simpleArray.get(2); // "zz"
+        String[] expected = {"qq", "aa", "zz"};
 
         assertThat(result, is(expected));
     }
+
 
     @Test
     public void whenAddTwoIntElementsShouldGetTwoIntElements() {
@@ -88,7 +99,6 @@ public class SimpleArrayTest {
     }
 
 
-
     @Test
     public void whenAddElementsRemoveOneShouldGetNull() {
         SimpleArray<Integer> simpleArray = new SimpleArray<>(5);
@@ -103,14 +113,14 @@ public class SimpleArrayTest {
 
         Integer[] expected = {1, 2, 3, 5, null};
         List<Integer> list = new ArrayList<>();
-        for (Integer i : expected){
+        for (Integer i : expected) {
             list.add(i);
         }
         //System.out.println(list.toString());
 
         String result = simpleArray.toString();
 
-        assertThat(result, is (list.toString()));
+        assertThat(result, is(list.toString()));
     }
 
     @Test
@@ -127,7 +137,7 @@ public class SimpleArrayTest {
         assertThat(result.get(1), is(100));
     }
 
-    @Test (expected = IndexOutOfBoundsException.class)
+    @Test(expected = IndexOutOfBoundsException.class)
     public void whenSetElementWithIndexBiggerThanRange() {
         SimpleArray<Integer> simpleArray = new SimpleArray<>(3);
 
@@ -157,7 +167,7 @@ public class SimpleArrayTest {
         assertThat(iterator.hasNext(), is(false));
     }
 
-    @Test (expected = NoSuchElementException.class)
+    @Test(expected = NoSuchElementException.class)
     public void whenUseSimpleArrayIteratorWithException() {
         SimpleArray<Integer> simpleArray = new SimpleArray<>(3);
 
