@@ -1,4 +1,4 @@
-package ru.job4j.basepatterns.behavioral.iterator;
+package ru.job4j.basepatterns.behavioral.iterator.example1;
 
 public class JavaDeveloperRunner {
     public static void main(String[] args) {

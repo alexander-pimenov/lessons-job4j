@@ -1,0 +1,6 @@
+iterators/ProfileIterator.java: Интерфейс итератора
+
+iterators/FacebookIterator.java: Итератор пользователей сети Facebook
+
+iterators/LinkedInIterator.java: Итератор пользователей сети LinkedIn
+

@@ -1,0 +1,2 @@
+spammer/SocialSpammer.java: Приложение рассылки сообщений
+

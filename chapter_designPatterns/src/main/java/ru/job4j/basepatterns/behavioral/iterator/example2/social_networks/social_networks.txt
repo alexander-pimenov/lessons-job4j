@@ -1,0 +1,6 @@
+social_networks/SocialNetwork.java: Интерфейс социальной сети
+
+social_networks/Facebook.java: Facebook
+
+social_networks/LinkedIn.java: LinkedIn
+
