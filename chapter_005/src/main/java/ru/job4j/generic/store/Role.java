@@ -1,5 +1,10 @@
 package ru.job4j.generic.store;
 
+/**
+ * Класс Role наследует абстрактный класс для моделей.
+ */
+
+
 public class Role extends Base {
 
     protected Role(String id) {
@@ -8,6 +13,6 @@ public class Role extends Base {
 
     @Override
     public String toString() {
-        return String.format("Role{ %s }", getId());
+        return String.format("Role[ %s ]", getId());
     }
 }

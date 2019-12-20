@@ -1,5 +1,9 @@
 package ru.job4j.generic.store;
 
+/**
+ * Класс User наследует абстрактный класс для моделей.
+ */
+
 public class User extends Base {
 
     protected User(String id) {
@@ -8,6 +12,6 @@ public class User extends Base {
 
     @Override
     public String toString() {
-        return String.format("User{ %s }", getId());
+        return String.format("User[ %s ]", getId());
     }
 }

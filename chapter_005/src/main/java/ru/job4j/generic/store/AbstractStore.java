@@ -1,7 +1,12 @@
 package ru.job4j.generic.store;
 
 public class AbstractStore<T extends Base> implements Store<T> {
-    private SimpleArray<T> simpleArray = new SimpleArray<>(10);
+
+    private SimpleArray<T> simpleArray;
+
+    public AbstractStore(int size) {
+        this.simpleArray = new SimpleArray<>(size);
+    }
 
     @Override
     public void add(T model) {
@@ -16,7 +21,9 @@ public class AbstractStore<T extends Base> implements Store<T> {
         boolean result = false;
         int index = 0;
         for (T element : this.simpleArray) {
+            //Проверяем на null и на равенство id.
             if (element != null && element.getId().equals(id)) {
+                //if (element.getId().equals(id)) {
                 this.simpleArray.set(index, model);
                 result = true;
                 break;
@@ -28,11 +35,36 @@ public class AbstractStore<T extends Base> implements Store<T> {
 
     @Override
     public boolean delete(String id) {
-        return false;
+        if (id == null) {
+            return false;
+        }
+        boolean result = false;
+        int index = 0;
+        for (T element : this.simpleArray) {
+            //Проверяем на null и на равенство id.
+            if (element != null && element.getId().equals(id)) {
+                //if (element.getId().equals(id)) {
+                this.simpleArray.remove(index);
+                result = true;
+                break;
+            }
+            index++;
+        }
+
+        return result;
     }
 
     @Override
     public T findById(String id) {
-        return null;
+        T result = null;
+        for (T element : this.simpleArray) {
+            //Проверяем на null и на равенство id.
+            if (element != null && element.getId().equals(id)) {
+                //if (element.getId().equals(id)) {
+                result = element;
+                break;
+            }
+        }
+        return result;
     }
 }

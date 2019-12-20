@@ -4,10 +4,9 @@ package ru.job4j.generic.store;
  * Класс-хранилище
  */
 
-public class UserStore extends AbstractStore<User> {
+public class RoleStore extends AbstractStore<Role> {
 
-    public UserStore(int size) {
+    public RoleStore(int size) {
         super(size);
     }
-
 }
