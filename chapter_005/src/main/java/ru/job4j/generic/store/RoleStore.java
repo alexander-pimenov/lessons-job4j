@@ -1,7 +1,7 @@
 package ru.job4j.generic.store;
 
 /**
- * Класс-хранилище
+ * Класс-хранилище для объектов Role
  */
 
 public class RoleStore extends AbstractStore<Role> {

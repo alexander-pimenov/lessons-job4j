@@ -1,7 +1,7 @@
 package ru.job4j.generic.store;
 
 /**
- * Класс-хранилище
+ * Класс-хранилище для объектов User
  */
 
 public class UserStore extends AbstractStore<User> {

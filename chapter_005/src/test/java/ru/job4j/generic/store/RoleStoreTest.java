@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 
 public class RoleStoreTest {
     @Test
-    public void whenAddUserThanShouldBeSame() {
+    public void whenAddRoleThanShouldBeSame() {
 
         RoleStore roleStore = new RoleStore(5);
         Role role = new Role("11");
@@ -18,7 +18,7 @@ public class RoleStoreTest {
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
-    public void whenAddUsersBiggerThanSize() {
+    public void whenAddRolesBiggerThanSize() {
 
         RoleStore userStore = new RoleStore(2);
         Role role1 = new Role("11");
@@ -31,7 +31,7 @@ public class RoleStoreTest {
     }
 
     @Test
-    public void whenAddTreeUsersAdnDeleteTwoShouldLeftOne() {
+    public void whenAddTreeRolesAdnDeleteTwoShouldLeftOne() {
 
         RoleStore roleStore = new RoleStore(3);
         Role role1 = new Role("11");
@@ -49,7 +49,7 @@ public class RoleStoreTest {
     }
 
     @Test
-    public void whenReplaceByIdThanReplaced() {
+    public void whenReplaceRoleByIdThanReplaced() {
         RoleStore roleStore = new RoleStore(2);
 
         Role role1 = new Role("11");
@@ -66,7 +66,7 @@ public class RoleStoreTest {
     }
 
     @Test
-    public void whenDeleteUserWhitWrongId() {
+    public void whenDeleteRoleWhitWrongId() {
 
         RoleStore roleStore = new RoleStore(2);
         Role role1 = new Role("11");
@@ -79,12 +79,10 @@ public class RoleStoreTest {
     }
 
     @Test
-    public void whenDeleteEmptyArray() {
+    public void whenDeleteRoleInEmptyArray() {
 
         RoleStore roleStore = new RoleStore(0);
 
         assertFalse(roleStore.delete("33"));
     }
-
-
 }
