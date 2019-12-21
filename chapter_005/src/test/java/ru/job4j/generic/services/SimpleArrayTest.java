@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.util.*;
 
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
 public class SimpleArrayTest {
@@ -24,6 +25,42 @@ public class SimpleArrayTest {
     }
 
     @Test
+    public void whenAddStringElementsAndNullShouldSeeStringElementsAndNullInArray() {
+        SimpleArray<String> simpleArray = new SimpleArray<>(5);
+
+        simpleArray.add("qq");
+        simpleArray.add("aa");
+        simpleArray.add(null);
+        simpleArray.add(null);
+        simpleArray.add("zz");
+        //System.out.println(simpleArray);
+
+        String[] expected = {"qq", "aa", null, null, "zz"};
+        //System.out.println(Arrays.toString(expected));
+
+        assertThat(simpleArray.toString(), is(Arrays.toString(expected)));
+    }
+
+    @Test
+    public void whenAddTwoElementsShouldSeeTwoElementsAndOtherNullInArray() {
+        SimpleArray<String> simpleArray = new SimpleArray<>(5);
+
+        simpleArray.add("qq");
+        simpleArray.add("aa");
+        //System.out.println(simpleArray);
+
+        String[] expected = {"qq", "aa", null, null, null};
+        //System.out.println(Arrays.toString(expected));
+        //System.out.println(simpleArray.get(3));
+        //System.out.println(simpleArray.get(4));
+
+        assertThat(simpleArray.toString(), is(Arrays.toString(expected)));
+        assertNull(simpleArray.get(3));
+        assertNull(simpleArray.get(4));
+    }
+
+
+    @Test
     public void whenAddThreeStringElementsShouldGetThreeStringElements() {
         SimpleArray<String> simpleArray = new SimpleArray<>(3);
 
@@ -36,6 +73,29 @@ public class SimpleArrayTest {
         result[1] = simpleArray.get(1); // "aa"
         result[2] = simpleArray.get(2); // "zz"
         String[] expected = {"qq", "aa", "zz"};
+
+        assertThat(result, is(expected));
+    }
+
+    @Test
+    public void whenAddThreeStringElementsAndNullShouldGetThreeStringElementsAndNull() {
+        SimpleArray<String> simpleArray = new SimpleArray<>(5);
+
+        simpleArray.add("qq");
+        simpleArray.add("aa");
+        simpleArray.add(null);
+        simpleArray.add("zz");
+        simpleArray.add(null);
+        //System.out.println(simpleArray);
+
+        String[] result = new String[5];
+        result[0] = simpleArray.get(0); // "qq"
+        result[1] = simpleArray.get(1); // "aa"
+        result[2] = simpleArray.get(2); // null
+        result[3] = simpleArray.get(3); // "zz"
+        result[4] = simpleArray.get(4); // null
+        String[] expected = {"qq", "aa", null, "zz", null};
+        //System.out.println(Arrays.toString(result));
 
         assertThat(result, is(expected));
     }
@@ -76,17 +136,6 @@ public class SimpleArrayTest {
         simpleArray.add(3);
 
         simpleArray.get(6);
-    }
-
-    @Test(expected = NoSuchElementException.class)
-    public void whenAddLastElementsAddCallIndexBiggerLastButSmallerSize() {
-        SimpleArray<Integer> simpleArray = new SimpleArray<>(5);
-
-        simpleArray.add(1);
-        simpleArray.add(2);
-        simpleArray.add(3);
-
-        simpleArray.get(4);
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
@@ -185,5 +234,24 @@ public class SimpleArrayTest {
         assertThat(iterator.hasNext(), is(false));
         iterator.next();
     }
+
+    // Было внесено изменение в код get(), убрал проверку
+//
+//        if (this.objects[index] == null) {
+//            throw new NoSuchElementException();
+//        }
+//
+// для того чтоб мы могли получать null из SimpleArray, а не получать NoSuchElementException.
+//
+//    @Test(expected = NoSuchElementException.class)
+//    public void whenAddLastElementsAddCallIndexBiggerLastButSmallerSize() {
+//        SimpleArray<Integer> simpleArray = new SimpleArray<>(5);
+//
+//        simpleArray.add(1);
+//        simpleArray.add(2);
+//        simpleArray.add(3);
+//
+//        simpleArray.get(4);
+//    }
 
 }
