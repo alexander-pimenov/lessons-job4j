@@ -82,8 +82,16 @@ public class SimpleArray<T> implements Iterable<T> {
         return (T) this.objects[index];
     }
 
+    /**
+     * Метод проверяет, находится ли index (в аргументе это position) в пределах
+     * диапазона массива.
+     * Если нет, то выбрасываем исключение IndexOutOfBoundsException (Выход за пределы массива).
+     *
+     * @param position проверяемый индекс.
+     */
+
     private void sizeCheck(int position) {
-        if (position >= this.size) {
+        if (position < 0 || position >= this.size) {
             throw new IndexOutOfBoundsException();
         }
     }
