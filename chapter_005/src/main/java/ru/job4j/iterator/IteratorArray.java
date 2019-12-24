@@ -46,4 +46,5 @@ public class IteratorArray implements Iterator {
     public Object next() {
         return values[index++];
     }
+
 }

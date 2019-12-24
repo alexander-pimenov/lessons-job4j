@@ -11,14 +11,14 @@ import java.util.NoSuchElementException;
 public class SimpleArrayList<E> implements Iterable<E> { //implements Iterable<E>
 
     private int size;
-    private Node<E> first;
+    private Node<E> first; //указатель на первый элемент (узел)
 
     /**
      * Метод вставляет в НАЧАЛО списка данные.
      * (очень похоже на Stack - добавляем в начало.)
      */
     public void add(E data) {
-        Node<E> newLink = new Node<>(data);
+        Node<E> newLink = new Node<>(data); //создаем новый элемент
         newLink.next = this.first;
         this.first = newLink;
         this.size++;
@@ -61,6 +61,22 @@ public class SimpleArrayList<E> implements Iterable<E> { //implements Iterable<E
     }
 
     /**
+     * Класс предназначенный для хранения данных.
+     * Приватный статический вложенный класс.
+     * Он хранит в себе указатель на следующий узел и само значение объекта,
+     * которое подставляется при создании узла в конструкторе.
+     */
+    private static class Node<E> {
+
+        E data; // данные
+        Node<E> next; // указатель на следующий элемент
+
+        Node(E data) {
+            this.data = data;
+        }
+    }
+
+    /**
      * Метод получения Итератора.
      */
 
@@ -89,18 +105,67 @@ public class SimpleArrayList<E> implements Iterable<E> { //implements Iterable<E
     }
 
     /**
-     * Класс предназначенный для хранения данных.
+     * Метод получения Итератора.
+     * Вариант 2.
      */
-    private static class Node<E> {
+//    @Override
+//    public Iterator<E> iterator() {
+//        return new SimpleArrayItr<>();
+//    }
+//
+//    private static class SimpleArrayItr<E> implements Iterator<E> {
+//        private int nextIndex;
+//        private final Node<E> next;
+//
+//        SimpleArrayItr() {
+//                next =
+//        }
+//
+//
+//        @Override
+//        public boolean hasNext() {
+//            return false;
+//        }
+//
+//        @Override
+//        public E next() {
+//            return null;
+//        }
+//    }
 
-        E data;
-        Node<E> next;
 
-        Node(E data) {
-            this.data = data;
-        }
-    }
 }
+
+//    //        @Override
+//    //        public Iterator<E> iterator() {
+//    //            return new ArrayItr<>(a);
+//    //        }
+//    //    }
+//    //
+//    //    private static class ArrayItr<E> implements Iterator<E> {
+//    //        private int cursor;
+//    //        private final E[] a;
+//    //
+//    //        ArrayItr(E[] a) {
+//    //            this.a = a;
+//    //        }
+//    //
+//    //        @Override
+//    //        public boolean hasNext() {
+//    //            return cursor < a.length;
+//    //        }
+//    //
+//    //        @Override
+//    //        public E next() {
+//    //            int i = cursor;
+//    //            if (i >= a.length) {
+//    //                throw new NoSuchElementException();
+//    //            }
+//    //            cursor = i + 1;
+//    //            return a[i];
+//    //        }
+//    //    }
+
 
     /*Получение итератора по образу LinkedList
 
