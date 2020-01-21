@@ -69,6 +69,7 @@
         <module>chapter_stream_api</module>
         <module>chapter_skillbox</module>
         <module>chapter_dropbox</module>
+        <module>chapter_xml</module>
     </modules>
 
 	<build>

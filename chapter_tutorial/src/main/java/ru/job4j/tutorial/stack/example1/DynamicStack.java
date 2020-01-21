@@ -1,4 +1,4 @@
-package ru.job4j.tutorial.stack;
+package ru.job4j.tutorial.stack.example1;
 
 import java.util.Arrays;
 import java.util.Iterator;
