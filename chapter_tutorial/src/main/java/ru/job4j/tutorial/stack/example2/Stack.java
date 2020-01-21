@@ -1,8 +1,9 @@
-package ru.job4j.tutorial.stack;
+package ru.job4j.tutorial.stack.example2;
+
+import java.util.NoSuchElementException;
 
 /**
- * Пример этих интерфейсов и классов взят по адресу
- * https://gist.github.com/anonymous/6a64bd70922bd4b5fd59
+ * пример https://gist.github.com/anonymous/6ce02f05a34048484c10
  */
 
 public interface Stack<E> extends Iterable<E> {
@@ -17,17 +18,17 @@ public interface Stack<E> extends Iterable<E> {
      * Retrieves and removes the first element of this stack
      *
      * @return the head of this stack
-     * @throws java.util.NoSuchElementException if this stack is empty
+     * @throws NoSuchElementException if this stack is empty
      */
-    E pop();
+    Object pop();
 
     /**
      * Retrieves, but does not remove, the first element of this stack
      *
      * @return the head of this stack
-     * @throws java.util.NoSuchElementException if this stack is empty
+     * @throws NoSuchElementException if this stack is empty
      */
-    E peek();
+    Object peek();
 
     /**
      * Returns the number of elements in this stack.  If this stack contains
