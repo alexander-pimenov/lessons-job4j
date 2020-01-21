@@ -1,4 +1,4 @@
-package ru.job4j.tutorial.queue;
+package ru.job4j.tutorial.queue.example1;
 
 /**
  * Пример этих интерфейсов и классов взят по адресу

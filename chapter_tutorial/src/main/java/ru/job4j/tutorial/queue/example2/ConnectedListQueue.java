@@ -1,14 +1,14 @@
-package ru.job4j.tutorial.queue;
+package ru.job4j.tutorial.queue.example2;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class LinkedQueue<E> implements Queue<E> {
+public class ConnectedListQueue<E> implements Queue<E> {
     private QueueElement head;
     private QueueElement tail;
     private int size;
 
-    public LinkedQueue() {
+    public ConnectedListQueue() {
         this.head = null;
     }
 
@@ -130,23 +130,27 @@ public class LinkedQueue<E> implements Queue<E> {
     }
 
     public static void main(String[] args) {
-        LinkedQueue<Integer> integers = new LinkedQueue<>();
-        integers.offer(1);
-        integers.offer(2);
-        integers.offer(3);
-        integers.offer(4);
+        ConnectedListQueue<Integer> stack = new ConnectedListQueue<>();
+        System.out.println("Is stack empty? " + stack.isEmpty());
+        stack.offer(6);
+        stack.offer(9);
+        System.out.println("Is stack empty? " + stack.isEmpty());
+        System.out.println("Stack size = " + stack.size());
 
-        System.out.println(integers.contains(5));
+        System.out.println("Iteration");
+        Iterator<Integer> iterator = stack.iterator();
+        while (iterator.hasNext())
+            System.out.println(iterator.next());
 
-        System.out.println("Remove: " + integers.remove());
-        System.out.println("Remove: " + integers.remove());
-        System.out.println("Remove: " + integers.remove());
-        System.out.println("Remove: " + integers.remove());
-
-        for (Integer integer : integers) {
-            System.out.println(integer);
+        System.out.println("Main methods");
+        try {
+            System.out.println(stack.peek());
+            System.out.println(stack.remove());
+            System.out.println(stack.remove());
+            System.out.println(stack.remove());
+        } catch (NoSuchElementException e) {
+            System.out.println("Stack is empty");
         }
-
-
+        System.out.println("Is stack empty? " + stack.isEmpty());
     }
 }

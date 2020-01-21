@@ -1,4 +1,4 @@
-package ru.job4j.tutorial.queue;
+package ru.job4j.tutorial.queue.example1;
 
 import java.util.Iterator;
 import java.util.LinkedList;
