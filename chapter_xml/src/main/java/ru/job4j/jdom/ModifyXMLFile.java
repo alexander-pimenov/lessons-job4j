@@ -13,6 +13,7 @@ import java.io.IOException;
 
 /**
  * Здесь рассматриваем Парсер JDOM для обновления или изменения существующего XML-файла xml_file7.xml
+ * https://www.codeflow.site/ru/article/java__how-to-modify-xml-file-in-java-jdom
  *
  * Подключил зависимость в pom.xml
  * 		https://mvnrepository.com/artifact/org.jdom/jdom
