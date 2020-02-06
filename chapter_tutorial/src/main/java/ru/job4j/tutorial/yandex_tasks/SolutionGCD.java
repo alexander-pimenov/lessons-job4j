@@ -1,6 +1,7 @@
 package ru.job4j.tutorial.yandex_tasks;
 /* НОД
 Наибольший общий делитель (НОД).
+gcd (Greatest Common Divisor).
 Ввести с клавиатуры 2 целых положительных числа.
 Вывести в консоль наибольший общий делитель.
 
@@ -12,21 +13,33 @@ package ru.job4j.tutorial.yandex_tasks;
 Наибольший общий делитель существует и однозначно определён,
 если хотя бы одно из чисел m или n не ноль.
 
+gcd (Greatest Common Divisor)
+
+Алгоритм Евклида:
+на каждой итерации находим остаток от деления первого числа на второе,
+значение второго числа присваиваем первому числу, а значение остатка —
+второму числу. Так и продолжаем до тех пор, пока в результате очередного
+деления, в остатке не получим ноль.
 
 */
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-public class Solution {
+public class SolutionGCD {
     public static void main(String[] args) throws Exception {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
+        System.out.println("Введите первое число:");
         int a = Integer.parseInt(reader.readLine());
+        System.out.println("Введите второе число:");
         int b = Integer.parseInt(reader.readLine());
+
         System.out.println(gcd(a, b));
         System.out.println(gcd_2(a, b));
-        System.out.println(gcd_3(a, b));
+        //System.out.println(gcd_3(a, b));
+        System.out.println(gcd_4(a, b));
+        System.out.println(gcd_5(a, b));
 
     }
 
@@ -37,7 +50,7 @@ public class Solution {
      * мы получаем бесконечный цикл. И программа не завершиться.
      */
 
-    public static int gcd_3(int a, int b) {
+    private static int gcd_3(int a, int b) {
         //проверка, что два аргумента одновременно не 0.
         if (a == 0 & b == 0) {
             throw new IllegalArgumentException("Нельзя использовать в аргументах два нуля!!!");
@@ -66,7 +79,18 @@ public class Solution {
      * значит выполняем b % a (30 % 6), остаток от деления 0, на этом мы прекращаем наш цикл и узнаем,
      * что наибольший общий делитель 18 и 30 = 6. и выводим a + b (b = 0, a = 6).
      */
-    public static int gcd(int a, int b) {
+
+    private static int gcd_2(int a, int b) {
+        //проверка, что два аргумента одновременно не 0.
+        if (a == 0 & b == 0) {
+            throw new IllegalArgumentException("Нельзя использовать в аргументах два нуля!!!");
+        }
+        if (b == 0)
+            return Math.abs(a);
+        return gcd_2(b, a % b);
+    }
+
+    private static int gcd(int a, int b) {
         //проверка, что два аргумента одновременно не 0.
         if (a == 0 & b == 0) {
             throw new IllegalArgumentException("Нельзя использовать в аргументах два нуля!!!");
@@ -82,13 +106,23 @@ public class Solution {
         return a;
     }
 
-    public static int gcd_2(int a, int b) {
-        //проверка, что два аргумента одновременно не 0.
-        if (a == 0 & b == 0) {
-            throw new IllegalArgumentException("Нельзя использовать в аргументах два нуля!!!");
+    private static long gcd_4(long a, long b) {
+        return b == 0 ? Math.abs(a) : gcd_4(b, a % b);
+    }
+
+    private static int gcd_5(int a, int b) {
+        //Если первое число меньше второго, меняем их местами.
+        if (a < b) {
+            int temp = a;
+            a = b;
+            b = temp;
         }
-        if (b == 0)
-            return Math.abs(a);
-        return gcd_2(b, a % b);
+        //Нахождение НОД
+        while (b != 0) {
+            int tmp = a % b;
+            a = b;
+            b = tmp;
+        }
+        return a;
     }
 }
