@@ -1,4 +1,4 @@
-package ru.job4j.list.list_pimalex;
+package ru.job4j.list.array_list_pimalex;
 
 import org.junit.Test;
 import org.junit.Before;

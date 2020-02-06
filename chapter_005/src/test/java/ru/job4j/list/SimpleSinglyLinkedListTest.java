@@ -1,10 +1,9 @@
 package ru.job4j.list;
 
-import org.junit.Test;
 import org.junit.Before;
+import org.junit.Test;
 
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -14,13 +13,13 @@ import static org.junit.Assert.assertThat;
  * @version $Id$
  * @since 0.1
  */
-public class SimpleArrayListTest {
+public class SimpleSinglyLinkedListTest {
 
-    private SimpleArrayList<Integer> list;
+    private SimpleSinglyLinkedList<Integer> list;
 
     @Before
     public void beforeTest() {
-        list = new SimpleArrayList<>();
+        list = new SimpleSinglyLinkedList<>();
         list.add(1);
         list.add(2);
         list.add(3);
