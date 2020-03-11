@@ -12,7 +12,7 @@ public class Solution {
         //System.out.println(max);
         BigDecimal min = Collections.min(numbers);
         //System.out.println(min);
-        BigDecimal divide = max.divide(min, RoundingMode.CEILING);
+        BigDecimal divide = max.divide(min, RoundingMode.UNNECESSARY);
         //System.out.println(divide);
 
         Collection<BigDecimal> result = new ArrayList<>();
@@ -36,6 +36,8 @@ public class Solution {
         list.add(new BigDecimal("7.0"));
         list.add(BigDecimal.valueOf(2.0));
         list.add(BigDecimal.valueOf(6.0));
+        list.add(BigDecimal.valueOf(8.0));
+        list.add(BigDecimal.valueOf(9.0));
         System.out.println(list);
 
         Collection<BigDecimal> filtered = null;

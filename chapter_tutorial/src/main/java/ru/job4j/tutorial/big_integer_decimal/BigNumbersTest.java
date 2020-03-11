@@ -27,7 +27,7 @@ import java.math.RoundingMode;
  * Обрати внимание: методы не являются статическими!
  */
 
-public class Main {
+public class BigNumbersTest {
     public static void main(String[] args) {
 
         BigInteger integer = new BigInteger("11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
@@ -50,10 +50,13 @@ public class Main {
         //Всего у BigDecimal существует 8 режимов округления.
         //метод setScale() и параметр режима округления (RoundingMode).
         BigDecimal decimal1 = new BigDecimal("111.5555555555");
+
         //ROUND_CEILING — округление в большую сторону
         BigDecimal decimalRound1 = decimal1.setScale(3, RoundingMode.CEILING);
         System.out.println("округление в большую сторону " + decimalRound1);
+
         //ROUND_DOWN — отбрасывание разряда
+        //Округление в меньшую сторону по модулю, т.е. знак не учитываем
         BigDecimal decimalRound2 = decimal1.setScale(3, RoundingMode.DOWN);
         System.out.println("отбрасывание разряда " + decimalRound2);
         //ROUND_FLOOR — округление в меньшую сторону
