@@ -1,4 +1,4 @@
-package ru.job4j.list.array_list_pimalex;
+package ru.job4j.list.linked_list_pimalex;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -8,9 +8,12 @@ import java.util.NoSuchElementException;
  * Класс SimpleArrayList.
  */
 
-public class SimpleArrayList<E> implements Iterable<E> { //implements Iterable<E>
+public class SimpleSinglyLinkedList<E> implements Iterable<E> { //implements Iterable<E>
 
+    //В этом поле храним размер нашего списка.
     private int size;
+
+    //Голова списка, нужна чтобы мы могли добавлять элементы.
     private Node<E> first; //указатель на первый элемент (узел)
 
     /**
@@ -61,29 +64,14 @@ public class SimpleArrayList<E> implements Iterable<E> { //implements Iterable<E
     }
 
     /**
-     * Класс предназначенный для хранения данных.
-     * Приватный статический вложенный класс.
-     * Он хранит в себе указатель на следующий узел и само значение объекта,
-     * которое подставляется при создании узла в конструкторе.
-     */
-    private static class Node<E> {
-
-        E data; // данные
-        Node<E> next; // указатель на следующий элемент
-
-        Node(E data) {
-            this.data = data;
-        }
-    }
-
-    /**
      * Метод получения Итератора.
      */
-
     @Override
     public Iterator<E> iterator() {
         return new Iterator<>() {
             private int cursor = 0;
+
+            Node<E> temp = first;
 
             @Override
             public boolean hasNext() {
@@ -95,45 +83,47 @@ public class SimpleArrayList<E> implements Iterable<E> { //implements Iterable<E
                 if (!hasNext()) {
                     throw new IndexOutOfBoundsException();
                 }
-
-                int i = cursor;
-                E nextElement = get(i);
+                E value = temp.getData();
+               temp = temp.next;
+                //int i = cursor;
+                //E nextElement = get(i); //метод get() лучше не использовать
+                //а пользоваться итератором
                 cursor++;
-                return nextElement;
+                return value;
             }
         };
     }
 
     /**
-     * Метод получения Итератора.
-     * Вариант 2.
+     * Класс предназначенный для хранения данных.
+     * Приватный статический вложенный класс.
+     * Он хранит в себе указатель на следующий узел и само значение объекта,
+     * которое подставляется при создании узла в конструкторе.
      */
-//    @Override
-//    public Iterator<E> iterator() {
-//        return new SimpleArrayItr<>();
-//    }
-//
-//    private static class SimpleArrayItr<E> implements Iterator<E> {
-//        private int nextIndex;
-//        private final Node<E> next;
-//
-//        SimpleArrayItr() {
-//                next =
-//        }
-//
-//
-//        @Override
-//        public boolean hasNext() {
-//            return false;
-//        }
-//
-//        @Override
-//        public E next() {
-//            return null;
-//        }
-//    }
+    private static class Node<E> {
 
+        E data; // данные хранящиеся в текущем узле
+        Node<E> next; // указатель (ссылка) на следующий элемент
 
+        /**
+         * Создадим конструктор, который будет приниматьна на вход значение.
+         * Т.к. при создании нового узла мы будем подавать на вход ему значение.
+         *
+         * @param data значение хранимого элемента в SimpleSinglyLinkedList<E>.
+         */
+
+        Node(E data) {
+            this.data = data;
+        }
+
+        public E getData() {
+            return data;
+        }
+
+        public Node<E> getNext() {
+            return next;
+        }
+    }
 }
 
 //    //        @Override
