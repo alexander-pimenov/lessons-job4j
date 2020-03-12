@@ -35,8 +35,13 @@ public class SimpleLinkedList<E> implements Iterable<E> {
      * (очень похоже на Stack - добавляем в начало.)
      */
     public void add(E data) {
-        Node<E> newLink = new Node<>(data);
+        //создаем новый узел
+        Node<E> newLink = new Node<>(data); //создаем новый элемент
+        //укажем ссылку на следующий элемент.
+        //говорим нашей промежуточной переменной newLink, указывая ссылку на next,
+        //что будет равняться предыдущему значению, т.е. голове head
         newLink.next = this.first;
+        //а сама голова head будет равняться newLink
         this.first = newLink;
         this.size++;
     }
@@ -51,6 +56,7 @@ public class SimpleLinkedList<E> implements Iterable<E> {
         if (result == null) {
             throw new NoSuchElementException();
         }
+        //просто переуказываем ссылку first на следующую ссылку
         this.first = first.next;
         this.size--;
         return result.data;
@@ -65,7 +71,7 @@ public class SimpleLinkedList<E> implements Iterable<E> {
             throw new NoSuchElementException();
         }
         for (int i = 0; i < index; i++) {
-            result = result.next;
+            result = result.next; //при каждом проходе, мы перезаписываем result
         }
         return result.data;
     }
@@ -136,8 +142,20 @@ public class SimpleLinkedList<E> implements Iterable<E> {
             return data;
         }
 
+        public Node<E> getPrev() {
+            return prev;
+        }
+
         public Node<E> getNext() {
             return next;
+        }
+
+        public void setNext(Node<E> next) {
+            this.next = next;
+        }
+
+        public void setPrev(Node<E> prev) {
+            this.prev = prev;
         }
     }
 }
