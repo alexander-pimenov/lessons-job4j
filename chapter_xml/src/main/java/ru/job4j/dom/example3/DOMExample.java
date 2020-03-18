@@ -49,7 +49,8 @@ public class DOMExample {
         //структуру Document в виде иерархического дерева.
         DocumentBuilder builder = factory.newDocumentBuilder();
 
-        // Запарсили XML, создав структуру Document. Теперь у нас есть доступ ко всем элементам, каким нам нужно.
+        // Запарсили XML, создав структуру Document.
+        // Теперь у нас есть доступ ко всем элементам, каким нам нужно.
         Document document = builder.parse(new File("C:\\projects\\lessons-job4j\\chapter_xml\\src\\main\\resources\\xml_file4.xml"));
 
         // Получение информации про каждый элемент отдельно
@@ -77,7 +78,8 @@ public class DOMExample {
             NamedNodeMap attributes = elements.item(i).getAttributes();
             String name = attributes.getNamedItem("name").getNodeValue();
 
-            // В зависимости от типа элемента, нам нужно собрать свою дополнительну информацию про каждый подкласс, а после добавить нужные образцы в коллекцию.
+            // В зависимости от типа элемента, нам нужно собрать свою дополнительну информацию
+            // про каждый подкласс, а после добавить нужные образцы в коллекцию.
             switch (element) {
                 case PROFESSOR: {
                     String experience = attributes.getNamedItem("experience").getNodeValue();

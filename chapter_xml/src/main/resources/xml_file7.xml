@@ -3,7 +3,8 @@
   <staff id="2">
     <lastname>mook kim</lastname>
     <nickname>mkyong</nickname>
-    <salary>7000</salary>
+    <salary>7500</salary>
     <age>28</age>
+    <age>30</age>
   </staff>
 </company>

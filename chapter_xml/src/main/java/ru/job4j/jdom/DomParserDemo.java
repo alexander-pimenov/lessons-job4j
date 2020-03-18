@@ -27,11 +27,20 @@ public class DomParserDemo {
 
         try {
             File inputFile = new File("C:\\projects\\lessons-job4j\\chapter_xml\\src\\main\\resources\\xml_file5.xml");
+
+            //Получение фабрики, чтобы после получить билдер документов.
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+
+            // Получили из фабрики билдер документов, который парсит XML, создает
+            //структуру Document в виде иерархического дерева.
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+
+            // Запарсили XML, создав структуру Document.
+            // Теперь у нас есть доступ ко всем элементам, каким нам нужно.
             Document doc = dBuilder.parse(inputFile);
 
-            //Этот метод normalize() убирает из xml файла не нужные для информации отступы, пробелы.
+            //Этот метод normalize() убирает из xml файла не нужные для информации
+            // отступы, пробелы.
             //read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
             doc.getDocumentElement().normalize();
 

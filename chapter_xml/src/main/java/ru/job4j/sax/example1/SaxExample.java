@@ -18,7 +18,7 @@ import java.util.List;
  */
 
 public class SaxExample {
-    //список со всеми сотрудниками
+    //список со всеми сотрудниками будем хранить в ArrayList
     private static List<Employee> employees = new ArrayList<>();
 
     public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
@@ -34,6 +34,7 @@ public class SaxExample {
         // Передаем путь к xml файлу и обработчик, который мы создали: class XMLHandler
         parser.parse(new File("C:\\projects\\lessons-job4j\\chapter_xml\\src\\main\\resources\\xml_file1.xml"), handler);
 
+        //Выводим информацию о сотруднике
         for (Employee employee : employees) {
             System.out.println(String.format("Имя сотрудника: %s, его должность: %s", employee.getName(), employee.getJob()));
         }

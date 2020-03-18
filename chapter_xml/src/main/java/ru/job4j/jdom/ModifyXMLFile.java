@@ -54,11 +54,12 @@ public class ModifyXMLFile {
             staff.getAttribute("id").setValue("2");
 
             //add new age element
-            Element age = new Element("age").setText("28");
+            //при каждом новом вызове будет добавляться новый элемент <age>
+            Element age = new Element("age").setText("30");
             staff.addContent(age);
 
             //update salary value
-            staff.getChild("salary").setText("7000");
+            staff.getChild("salary").setText("7500");
 
             //remove firstname element
             staff.removeChild("firstname");
