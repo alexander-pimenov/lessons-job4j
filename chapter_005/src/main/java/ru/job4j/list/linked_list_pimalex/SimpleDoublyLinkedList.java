@@ -60,7 +60,7 @@ public class SimpleDoublyLinkedList<E> implements Iterable<E> {
      * и возвращающий его значение.
      * (очень похоже на Stack - удаляем из начала.)
      */
-    public E delete() {
+    public E deleteFirst() {
         Node<E> result = this.first;
         if (result == null) {
             throw new NoSuchElementException();
@@ -85,8 +85,11 @@ public class SimpleDoublyLinkedList<E> implements Iterable<E> {
         result.data = null;
         result.prev = null;
         last = prev;
-        if (prev == null) first = null;
-        else prev.next = null;
+        if (prev == null) {
+            first = null;
+        } else {
+            prev.next = null;
+        }
 
         this.size--;
         modCount++;

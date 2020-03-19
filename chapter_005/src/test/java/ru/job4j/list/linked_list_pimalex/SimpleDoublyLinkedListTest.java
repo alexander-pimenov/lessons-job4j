@@ -101,7 +101,7 @@ public class SimpleDoublyLinkedListTest {
         list.addFirst(3);
 
         //метод delete() - удаляет первый элемент
-        assertThat(list.delete(), is(3));
+        assertThat(list.deleteFirst(), is(3));
         assertThat(list.getSize(), is(2));
         assertThat(list.get(0), is(2));
         assertThat(list.get(1), is(1));
@@ -134,11 +134,11 @@ public class SimpleDoublyLinkedListTest {
         list.addFirst(2);
         list.addFirst(3);
 
-        assertThat(list.delete(), is(3));
-        assertThat(list.delete(), is(2));
-        assertThat(list.delete(), is(1));
+        assertThat(list.deleteFirst(), is(3));
+        assertThat(list.deleteFirst(), is(2));
+        assertThat(list.deleteFirst(), is(1));
         assertThat(list.getSize(), is(0));
-        list.delete();
+        list.deleteFirst();
     }
 
     @Test(expected = NoSuchElementException.class)
@@ -166,9 +166,9 @@ public class SimpleDoublyLinkedListTest {
         list.addFirst(2);
         list.addFirst(3);
 
-        list.delete();
-        list.delete();
-        list.delete();
+        list.deleteFirst();
+        list.deleteFirst();
+        list.deleteFirst();
         //System.out.println(list.getSize()); //для просмотра size списка
         list.get(0);
     }
@@ -235,7 +235,7 @@ public class SimpleDoublyLinkedListTest {
         Iterator<Integer> itr = list.iterator();
         assertThat(itr.next(), is(5));
         assertThat(itr.next(), is(15));
-        list.delete(); // удаляет первый элемент
+        list.deleteFirst(); // удаляет первый элемент
         itr.next();
     }
 
