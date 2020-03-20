@@ -10,6 +10,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class DOMExample {
     private static final String MEMBER = "member";
     private static final String STUDENT = "student";
 
-    public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException {
+    public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException, URISyntaxException {
         //Получение фабрики, чтобы после получить билдер документов.
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
@@ -51,7 +52,11 @@ public class DOMExample {
 
         // Запарсили XML, создав структуру Document.
         // Теперь у нас есть доступ ко всем элементам, каким нам нужно.
-        Document document = builder.parse(new File("C:\\projects\\lessons-job4j\\chapter_xml\\src\\main\\resources\\xml_file4.xml"));
+        //Получим путь к нашему xml файлу.
+        //Document document = builder.parse(new File("C:\\projects\\lessons-job4j\\chapter_xml\\src\\main\\resources\\xml_file4.xml"));
+        Document document = builder.parse(new File(DOMExample.class
+                .getResource("/xml_file4.xml")
+                .toURI().getPath()));
 
         // Получение информации про каждый элемент отдельно
         collectInformation(document, PROFESSOR);

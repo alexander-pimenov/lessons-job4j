@@ -9,15 +9,13 @@ import javax.xml.parsers.*;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DOMExample {
-    public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException, XMLStreamException {
+    public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException, XMLStreamException, URISyntaxException {
 
         //System.out.println("Введите название файла: ");
 
@@ -34,7 +32,10 @@ public class DOMExample {
 
         // Запарсили XML, создав структуру Document.
         // Теперь у нас есть доступ ко всем элементам, каким нам нужно.
-        Document document = builder.parse("c:/projects/lessons-job4j/chapter_xml/src/main/resources/Storage.xml");
+        //Document document = builder.parse("c:/projects/lessons-job4j/chapter_xml/src/main/resources/Storage.xml");
+        Document document = builder.parse(new File(DOMExample.class
+                .getResource("/Storage.xml")
+                .toURI().getPath()));
         //Document document = builder.parse("c:/projects/lessons-job4j/chapter_xml/src/main/resources/" + file);
 
         Element documentElement = document.getDocumentElement();
@@ -132,7 +133,7 @@ public class DOMExample {
             XMLStreamReader xmlr3 = XMLInputFactory.newInstance()
                     .createXMLStreamReader(new FileInputStream(fileName3));
 
-            int count=0;
+            int count = 0;
             while (xmlr3.hasNext()) {
                 xmlr3.next();
                 if (xmlr3.isStartElement()) {
@@ -232,7 +233,7 @@ public class DOMExample {
             Node node = nList.item(temp);
             if (node.getNodeType() == Node.ELEMENT_NODE) {
                 System.out.println("Node Name = " + node.getNodeName()
-                //        + "; Value = " + node.getTextContent()
+                        //        + "; Value = " + node.getTextContent()
                 );
                 //Проверяем все атрибуты
                 if (node.hasAttributes()) {

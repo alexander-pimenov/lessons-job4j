@@ -11,6 +11,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,15 +38,36 @@ public class DOMExample {
     //список для сотрудников из XML файла
     private static List<Employee> employees = new ArrayList<>();
 
-    public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException {
+    public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException, URISyntaxException {
         //Получение фабрики, чтобы полсе получить билдер документов.
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
         //Получили из фабрики билдер документов, который парсит XML, создает структуру Document в виде иерархического дерева.
         DocumentBuilder builder = factory.newDocumentBuilder();
 
+       //Получим путь к нашему xml файлу.(вариант 1) ОБЯЗАТЕЛЬНО ставить - "/"
+        File xml_file1 = new File(DOMExample.class.getResource("/xml_file1.xml").toURI().getPath());
+
+        //Получим путь к нашему xml файлу.(вариант 2)
+//        ClassLoader classLoader = DOMExample.class.getClassLoader();
+//        String path = classLoader.getResource("xml_file1.xml").getPath();
+
+        //Получим путь к нашему xml файлу.(вариант 3) ОБЯЗАТЕЛЬНО ставить - "/"
+//        URL resource1 = DOMExample.class.getResource("/xml_file1.xml");
+//        File toFile = Paths.get(resource1.toURI()).toFile();
+
+
         //Запарсили XML, создав структуру Document. Теперь у нас есть доступ ко всем элементам, каким нам нужно.
-        Document document = builder.parse(new File("C:\\projects\\lessons-job4j\\chapter_xml\\src\\main\\resources\\xml_file1.xml"));
+        //Так прописывать путь к файлу не верно. На других машинах будет ошибка.
+        //Document document = builder.parse(new File("C:\\projects\\lessons-job4j\\chapter_xml\\src\\main\\resources\\xml_file1.xml"));
+        //1-й вариант найденного пути к файлу
+        Document document = builder.parse(xml_file1);
+
+        //2-й вариант найденного пути к файлу
+        //Document document = builder.parse(new File(path));
+
+        //3-й вариант найденного пути к файлу
+        //Document document = builder.parse(toFile);
 
         // Получение списка всех элементов employee внутри корневого элемента (getDocumentElement возвращает ROOT элемент XML файла).
         NodeList employeeElements = document.getDocumentElement().getElementsByTagName("employee");
@@ -68,3 +90,6 @@ public class DOMExample {
         }
     }
 }
+
+//C:\projects\lessons-job4j\chapter_xml\src\main\resources
+//

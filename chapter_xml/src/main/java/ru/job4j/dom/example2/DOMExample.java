@@ -13,6 +13,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
 
 /**
  * https://www.codeflow.site/
@@ -28,7 +31,7 @@ import java.io.InputStreamReader;
  */
 
 public class DOMExample {
-    public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException {
+    public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException, URISyntaxException {
 
         System.out.println("Введите имя тега: ");
 
@@ -43,8 +46,12 @@ public class DOMExample {
         DocumentBuilder builder = factory.newDocumentBuilder();
 
         // Запарсили XML, создав структуру Document.
+        //Получим путь к нашему xml файлу. ОБЯЗАТЕЛЬНО ставить - "/"
+        URL resource = DOMExample.class.getResource("/xml_file3.xml");
+        File toFile = Paths.get(resource.toURI()).toFile();
         // Теперь у нас есть доступ ко всем элементам, каким нам нужно.
-        Document document = builder.parse(new File("C:\\projects\\lessons-job4j\\chapter_xml\\src\\main\\resources\\xml_file3.xml"));
+        //Document document = builder.parse(new File("C:\\projects\\lessons-job4j\\chapter_xml\\src\\main\\resources\\xml_file3.xml"));
+        Document document = builder.parse(toFile);
 
         // Считывание имени тега из консоли для поиска его в файле.
         String element = reader.readLine();
