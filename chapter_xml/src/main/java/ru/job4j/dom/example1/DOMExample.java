@@ -56,6 +56,9 @@ public class DOMExample {
 //        URL resource1 = DOMExample.class.getResource("/xml_file1.xml");
 //        File toFile = Paths.get(resource1.toURI()).toFile();
 
+        //Получим путь к нашему xml файлу.(вариант 4) ОБЯЗАТЕЛЬНО ставить - "/"
+        //File xml_file1 = new File(DOMExample.class.getResource("/xml_file1.xml").getFile());
+
 
         //Запарсили XML, создав структуру Document. Теперь у нас есть доступ ко всем элементам, каким нам нужно.
         //Так прописывать путь к файлу не верно. На других машинах будет ошибка.
@@ -68,6 +71,10 @@ public class DOMExample {
 
         //3-й вариант найденного пути к файлу
         //Document document = builder.parse(toFile);
+
+        //4-й вариант найденного пути к файлу
+        //Document document = builder.parse(xml_file1);
+
 
         // Получение списка всех элементов employee внутри корневого элемента (getDocumentElement возвращает ROOT элемент XML файла).
         NodeList employeeElements = document.getDocumentElement().getElementsByTagName("employee");

@@ -1,4 +1,4 @@
-package ru.job4j.jdom;
+package ru.job4j.jdom.example1;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -8,6 +8,7 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
+import java.net.URISyntaxException;
 
 /**
  * Ниже приведены шаги, используемые при анализе документа с использованием JDOM Parser.
@@ -23,10 +24,18 @@ import java.io.File;
  */
 
 public class DomParserDemo {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws URISyntaxException {
+
+
 
         try {
-            File inputFile = new File("C:\\projects\\lessons-job4j\\chapter_xml\\src\\main\\resources\\xml_file5.xml");
+
+            //Можно так задавать путь к нашему файлу
+            // String path = DomParserDemo.class.getResource("/xml_file5.xml").toURI().getPath();
+            //File inputFile = new File(path);
+
+            //А можно и так.
+            File inputFile = new File(DomParserDemo.class.getResource("/xml_file5.xml").getFile());
 
             //Получение фабрики, чтобы после получить билдер документов.
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();

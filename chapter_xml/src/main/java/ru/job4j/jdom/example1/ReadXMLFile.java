@@ -1,4 +1,4 @@
-package ru.job4j.jdom;
+package ru.job4j.jdom.example1;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -8,6 +8,7 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
+import java.net.URISyntaxException;
 
 /*
  * Пример с
@@ -15,11 +16,13 @@ import java.io.File;
  * */
 
 public class ReadXMLFile {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws URISyntaxException {
+
+        String path = ReadXMLFile.class.getResource("/xml_file6.xml").toURI().getPath();
 
         try {
 
-            File fXmlFile = new File("C:\\projects\\lessons-job4j\\chapter_xml\\src\\main\\resources\\xml_file6.xml");
+            File fXmlFile = new File(path);
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(fXmlFile);

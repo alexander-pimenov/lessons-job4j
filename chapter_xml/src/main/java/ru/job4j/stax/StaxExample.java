@@ -5,6 +5,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.net.URISyntaxException;
 
 /**
  * В версии Java SE 6 появился еще один вариант разбора XML —
@@ -20,7 +21,7 @@ import java.io.FileNotFoundException;
  */
 
 public class StaxExample {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws URISyntaxException {
         final String fileName = "C:\\projects\\lessons-job4j\\chapter_xml\\src\\main\\resources\\BookCatalog.xml";
 
         /*
@@ -70,7 +71,8 @@ public class StaxExample {
         }
 
         System.out.println("===========Next file============");
-        final String fileName3 = "C:\\projects\\lessons-job4j\\chapter_xml\\src\\main\\resources\\Storage.xml";
+        //final String fileName3 = "C:\\projects\\lessons-job4j\\chapter_xml\\src\\main\\resources\\Storage.xml";
+        String fileName3 = StaxExample.class.getResource("/Storage.xml").getPath();
         try {
             XMLStreamReader xmlr3 = XMLInputFactory.newInstance().createXMLStreamReader(fileName3, new FileInputStream(fileName3));
 

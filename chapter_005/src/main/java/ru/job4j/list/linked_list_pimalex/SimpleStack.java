@@ -20,6 +20,7 @@ public class SimpleStack<E> extends SimpleDoublyLinkedList<E> {
 
     /**
      * Метод возвращает значение и удаляет его из коллекции.
+     * Удаляет из начала списка.
      *
      * @return значение первого элемента в списке.
      */
@@ -29,6 +30,7 @@ public class SimpleStack<E> extends SimpleDoublyLinkedList<E> {
 
     /**
      * Метод помещает значение в коллекцию.
+     * В начало списка.
      *
      * @param value помещаемое значение.
      */
@@ -38,15 +40,17 @@ public class SimpleStack<E> extends SimpleDoublyLinkedList<E> {
 
     /**
      * Метод возвращает размер стека
+     *
      * @return размер стека
      */
-    public int size (){
+    public int size() {
         return linked.getSize();
     }
 
 
     /**
      * Использовал для тестирования
+     *
      * @param args по умолчанию
      */
     public static void main(String[] args) {
@@ -55,6 +59,11 @@ public class SimpleStack<E> extends SimpleDoublyLinkedList<E> {
         stack.push(2);
         stack.push(3);
         stack.push(4);
+
+        System.out.println("0 -> " + stack.linked.get(0));
+        System.out.println("1 -> " + stack.linked.get(1));
+        System.out.println("2 -> " + stack.linked.get(2));
+        System.out.println("3 -> " + stack.linked.get(3));
 
         SimpleDoublyLinkedList<Integer> linkedList = new SimpleDoublyLinkedList<>();
         linkedList.addLast(10);
@@ -65,8 +74,7 @@ public class SimpleStack<E> extends SimpleDoublyLinkedList<E> {
         System.out.println(stack2.size());
         System.out.println(stack2.linked.get(0));
         System.out.println(stack2.linked.get(1));
-        System.out.println(stack2. linked.get(2));
-
+        System.out.println(stack2.linked.get(2));
 
 
         System.out.println("================");
