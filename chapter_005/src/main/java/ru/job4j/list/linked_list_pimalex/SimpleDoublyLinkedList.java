@@ -32,7 +32,11 @@ public class SimpleDoublyLinkedList<E> implements Iterable<E> {
      */
     public void addFirst(E data) {
         Node<E> newLink = new Node<>(data); //создаем новый элемент
+        //укажем ссылку на следующий элемент.
+        //говорим нашей промежуточной переменной newLink, указывая ссылку на next,
+        //что будет равняться предыдущему значению, т.е. голове head
         newLink.next = this.first;
+        //а сама голова head будет равняться newLink
         this.first = newLink;
         this.size++;
         modCount++;
@@ -65,6 +69,7 @@ public class SimpleDoublyLinkedList<E> implements Iterable<E> {
         if (result == null) {
             throw new NoSuchElementException();
         }
+        //просто переуказываем ссылку first на следующую ссылку
         this.first = first.next;
         this.size--;
         modCount++;
@@ -108,7 +113,7 @@ public class SimpleDoublyLinkedList<E> implements Iterable<E> {
             throw new ArrayIndexOutOfBoundsException();
         }
         for (int i = 0; i < index; i++) {
-            result = result.next;
+            result = result.next; //при каждом проходе, мы перезаписываем result
         }
         return result.data;
     }

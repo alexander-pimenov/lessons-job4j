@@ -70,6 +70,9 @@ public class SimpleLinkedList<E> implements Iterable<E> {
         if (result == null) {
             throw new NoSuchElementException();
         }
+        if (index >= size) {
+            throw new ArrayIndexOutOfBoundsException();
+        }
         for (int i = 0; i < index; i++) {
             result = result.next; //при каждом проходе, мы перезаписываем result
         }
@@ -114,6 +117,9 @@ public class SimpleLinkedList<E> implements Iterable<E> {
 
     /**
      * Класс предназначенный для хранения данных.
+     * Приватный статический вложенный класс.
+     * Он хранит в себе указатель на следующий узел и само значение объекта,
+     * которое подставляется при создании узла в конструкторе.
      */
     private static class Node<E> {
 

@@ -11,7 +11,7 @@ import java.util.NoSuchElementException;
 public class SimpleSinglyLinkedList<E> implements Iterable<E> { //implements Iterable<E>
 
     //В этом поле храним размер нашего списка.
-    private int size;
+    private int size = 0;
 
     //Голова списка, нужна чтобы мы могли добавлять элементы.
     private Node<E> first; //указатель на первый элемент (узел)
@@ -26,6 +26,26 @@ public class SimpleSinglyLinkedList<E> implements Iterable<E> { //implements Ite
         this.first = newLink;
         this.size++;
     }
+
+    /**
+     * Метод вставляет в КОНЕЦ списка данные.
+     */
+    public void addLast(E data) {
+
+        Node<E> temp = new Node<E>(data, null);
+        if (first == null) {
+            first = temp;
+            this.size++;
+            return;
+        }
+        Node<E> tail = first;
+        while (tail.next != null) {
+            tail = tail.next;
+        }
+        tail.next = temp;
+        this.size++;
+    }
+
 
     /**
      * Метод реализующий удаления ПЕРВОГО элемента в списке
@@ -64,6 +84,23 @@ public class SimpleSinglyLinkedList<E> implements Iterable<E> { //implements Ite
     }
 
     /**
+     * Метод для перевертывания Односвязного списка.
+     */
+    public void revert() {
+        Node<E> temp = first;
+        Node<E> previous = null;
+        Node<E> current = null;
+        while (temp != null) {
+            current = temp;
+            temp = temp.next;
+
+            current.next = previous;
+            previous = current;
+            first = current;
+        }
+    }
+
+    /**
      * Метод получения Итератора.
      */
     @Override
@@ -75,6 +112,8 @@ public class SimpleSinglyLinkedList<E> implements Iterable<E> { //implements Ite
 
             @Override
             public boolean hasNext() {
+
+                //return temp != null;
                 return cursor < size;
             }
 
@@ -84,7 +123,7 @@ public class SimpleSinglyLinkedList<E> implements Iterable<E> { //implements Ite
                     throw new IndexOutOfBoundsException();
                 }
                 E value = temp.getData();
-               temp = temp.next;
+                temp = temp.next;
                 //int i = cursor;
                 //E nextElement = get(i); //метод get() лучше не использовать
                 //а пользоваться итератором
@@ -114,6 +153,11 @@ public class SimpleSinglyLinkedList<E> implements Iterable<E> { //implements Ite
 
         Node(E data) {
             this.data = data;
+        }
+
+        public Node(E data, Node<E> next) {
+            this.data = data;
+            this.next = next;
         }
 
         public E getData() {
