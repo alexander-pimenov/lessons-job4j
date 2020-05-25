@@ -15,7 +15,8 @@ public class CipherCode {
         String ret;
         Scanner sc = new Scanner(System.in);
         System.out.print("Введите строку:");
-        String str = "просто пример строки"; //sc.nextLine();
+        //String str = "просто пример строки"; //sc.nextLine();
+        String str = "я ваша тетя"; //sc.nextLine();
         System.out.print("Введите строку:");
         String key = "ключ"; //sc.nextLine();
         System.out.println("");
