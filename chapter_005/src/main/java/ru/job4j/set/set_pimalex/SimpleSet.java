@@ -47,13 +47,13 @@ public class SimpleSet<E> implements Iterable<E> {
 //        }
 //        return false;
 //    }
-
     public boolean contains(E value) {
-        for(E setItem : simpleArrayList) {
-            if(setItem == value) {
+        for (E setItem : simpleArrayList) {
+            if (setItem == value) {
                 return true;
             }
         }
+
         return false;
     }
 
@@ -95,6 +95,26 @@ public class SimpleSet<E> implements Iterable<E> {
         for (Integer item : set) {
             System.out.println(item);
         }
+        System.out.println("====================================");
+
+        SimpleSet<String> setString = new SimpleSet<>();
+        setString.add("aaa");
+        setString.add("aaa");
+        setString.add("qqq");
+        setString.add("qqq");
+        setString.add("sss");
+        setString.add("sss");
+        setString.add(null);
+        setString.add(null);
+        setString.add("qqq");
+        setString.add("aaa");
+        setString.add("sss");
+        setString.add(null);
+        System.out.println("Size: " + setString.simpleArrayList.size());
+        for (String item : setString) {
+            System.out.println(item);
+        }
+
 
     }
 }

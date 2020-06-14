@@ -12,6 +12,7 @@ import java.util.*;
  */
 public class MyHashMap<K, V> implements Iterable<MyHashMap.Node> {
 
+
     @Override
     public Iterator<Node> iterator() {
         return new Iterator<Node>() {
@@ -95,6 +96,7 @@ public class MyHashMap<K, V> implements Iterable<MyHashMap.Node> {
             return "Node{" + "key=" + key + ", value=" + value + '}';
         }
     }
+
     /**
      * Inner container.
      */
@@ -137,6 +139,10 @@ public class MyHashMap<K, V> implements Iterable<MyHashMap.Node> {
             }
             this.table = newTable;
         }
+    }
+
+    public int size() {
+        return amount;
     }
 
     boolean insert(K key, V value) {
