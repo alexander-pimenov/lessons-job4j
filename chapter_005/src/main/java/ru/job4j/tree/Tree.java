@@ -48,7 +48,7 @@ public class Tree<E extends Comparable<E>> implements MyTree<E> {
         return rsl;
     }
 
-    public boolean isBinary() {
+        public boolean isBinary() {
         boolean result = true;
         Queue<Node<E>> data = new LinkedList<>();
         data.offer(root);

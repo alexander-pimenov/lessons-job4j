@@ -8,7 +8,7 @@ package ru.job4j.generic.services;
  * в классе родителя, в SimpleList<>.
  */
 
-public class Stack extends SimpleList<String> {
+public class Stack<E> extends SimpleList<E> {
 
     //конструктор.
     public Stack(int size) {

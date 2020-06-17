@@ -18,7 +18,7 @@ public class SimpleListTest {
 
         //Т.к. Steck наследутся от SimpleList и имеет указаный в классе
         // генерик <String>, то здесь можно уже не писать <String>.
-        Stack stack = new Stack(6);
+        Stack<String> stack = new Stack(6);
 
         stack.add("stack test");
         String stackResult = stack.get(0);
