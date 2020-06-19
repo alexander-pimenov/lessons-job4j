@@ -10,7 +10,13 @@ public class Tree {
      * @return сумма всех элементов дерева
      */
     public int sumRecursive(Node root) {
+        if (root == null) {
+            System.out.println("Tree is Empty!");
+            return -1;
+        }
         int sum = root.value;
+
+        System.out.print(root.value + " "); //1 вариант, так будет виден обход в глубину
 
         /*если левый от корня узел не null, то спускаемся к нему
          * Запоминаем значение корня и вызываем рекурсивно опять sumRecursive
@@ -19,12 +25,16 @@ public class Tree {
             sum += sumRecursive(root.left);
         }
 
+//        System.out.print(root.value + " "); //2 вариант, так будет виден обход
+
         /*если правый от корня узел не null, то спускаемся к нему
          * Запоминаем значение корня и вызываем рекурсивно опять sumRecursive
          * Проводим опять проверку на ненулевой правый потомок*/
         if (root.right != null) {
             sum += sumRecursive(root.right);
         }
+//        System.out.print(root.value + " "); //3 вариант, так будет виден обход
+
         return sum;
     }
 
@@ -36,6 +46,10 @@ public class Tree {
      * @return сумма всех узлов дерева
      */
     public int sumDeep(Node root) {
+        if (root == null) {
+            System.out.println("Tree is Empty!");
+            return -1;
+        }
         //Используем стек, который сами реализовали
         SimpleStack<Node> stack = new SimpleStack<>();
         stack.push(root);
@@ -45,7 +59,7 @@ public class Tree {
             Node node = stack.pop();
 
             //Для того чтобы было нагляднее, как обходятся числа в дереве
-            System.out.println(node.value);
+            System.out.print(node.value + " ");
 
             sum = sum + node.value;
 
@@ -68,6 +82,10 @@ public class Tree {
      * @return сумма всех узлов дерева
      */
     public int sumWide(Node root) {
+        if (root == null) {
+            System.out.println("Tree is Empty!");
+            return -1;
+        }
         //Используем Очередь, которую сами реализовали
         SimpleQueue<Node> queue = new SimpleQueue<>();
         queue.add(root);
@@ -77,7 +95,7 @@ public class Tree {
             Node node = queue.remove();
 
             //Для того чтобы было нагляднее, как обходятся числа в дереве
-            System.out.println(node.value);
+            System.out.print(node.value + " ");
 
             sum = sum + node.value;
 
