@@ -39,7 +39,8 @@ public class AnalizyTest {
     private String tmp = null; //используем просто чтобы было видно появившиеся файлы. nullserver.log nulltarget.csv
 
     /*До тестируемого метода мы создаем лог файл и записываем в него
-     * дынные по работе сервера.*/
+     * дынные по работе сервера.
+     * Добавляем tmp=null к названию фала, чтоб выделялся*/
     @Before
     public void setUp() {
         analizy = new Analizy();

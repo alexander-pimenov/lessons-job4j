@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.StringJoiner;
 
+/**
+ * Читаем файл конфигурации.
+ */
 public class Config {
     private final String path;
     private final Map<String, String> values = new HashMap<String, String>();
@@ -13,6 +16,7 @@ public class Config {
     public Config(final String path) {
         this.path = path;
     }
+
     /*Метод читает из файла все ключи и значения разделенные знаком "=" в карту values.
      * Не читает пустые строки и строки начинающиеся с ##*/
     public void load() {
@@ -26,6 +30,7 @@ public class Config {
             e.printStackTrace();
         }
     }
+
     /*Метод читает из файла значение из карты values по ключу.*/
     public String value(String key) {
         return values.get(key);
@@ -44,6 +49,9 @@ public class Config {
 
     public static void main(String[] args) {
 //        System.out.println(new Config("app.properties")); //файл не читался поэтому использую код ниже через getResources
+        //Положил файл в папку resources и вычитал его от туда.
+        //Но папка ресурсов не предназначена для создания в ней файлов из программы
+        //создавайте файлы в корне модуля или проекта
         System.out.println(new Config(Config.class.getResource("/app1.properties").getFile()));
         System.out.println(new Config(Config.class.getResource("/app2.properties").getFile()));
     }
