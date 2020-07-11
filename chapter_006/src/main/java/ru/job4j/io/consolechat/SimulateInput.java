@@ -1,8 +1,8 @@
 package ru.job4j.io.consolechat;
 
 public class SimulateInput implements Input {
-    String[] arrayOfSimulateInput;
-    int count = 0;
+    private String[] arrayOfSimulateInput;
+    private int count = 0;
 
     public SimulateInput(String[] arrayOfSimulateInput) {
         this.arrayOfSimulateInput = arrayOfSimulateInput;

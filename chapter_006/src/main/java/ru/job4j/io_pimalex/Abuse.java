@@ -10,13 +10,14 @@ import java.util.stream.Stream;
 public class Abuse {
     /**
      * Метод принимает два файла и список слов для удаления.
+     * List<String> words - список слов для удаления
      */
     public static void drop(String source, String target, List<String> words) throws IOException {
         try (BufferedReader in = new BufferedReader(new FileReader(source));
              PrintWriter out = new PrintWriter(new BufferedOutputStream(new FileOutputStream(target)))) {
             in.lines()
-                    .flatMap(line -> Stream.of(line.split("\\s+")))
-                    .filter(word -> !words.contains(word)).map(word -> word + " ")
+                    .flatMap(line -> Stream.of(line.split("\\s+"))) // "\\s+" - пробел или несколько пробелов
+                    .filter(word -> !words.contains(word)).map(word -> word + " ") // меняем запрещенноне слово на пробел
                     .forEach(out::print);
         }
     }

@@ -9,21 +9,53 @@ import java.util.function.Predicate;
 
 public class Search3 {
     public static void main(String[] args) throws IOException {
+
+        /*Используя start или start2 можно получать название файлов с относительным путем (
+        путь от каталога) или абсолютным путем (путь от корневого диска С:\)*/
         Path start = Paths.get(".");
-
-        search(start, s -> s.endsWith(".csv")
-                ||s.endsWith(".sample")
-        ).forEach(System.out::println);
-        System.out.println("========================");
-
-        searchFiles1(start, s -> s.endsWith(".csv")
-                || s.endsWith(".sample")
-        ).forEach(System.out::println);
-        System.out.println("========================");
-
+        Path start2 = Paths.get(".").toAbsolutePath();
+        Path start3 = Paths.get("./chapter_005").toAbsolutePath();
+        Path start4 = Paths.get("./chapter_004").toAbsolutePath();
         Search3 search3 = new Search3();
-        search3.filter(start.toString(), List.of(".csv", ".sample")).forEach(System.out::println);
-        System.out.println("========================");
+
+//        long before1 = System.currentTimeMillis(); //проверка времени работы метода: старт
+//        search3.search(start2, s -> s.endsWith(".csv")
+//                //||s.endsWith(".sample")
+//        ).forEach(System.out::println);
+//        long after1 = System.currentTimeMillis(); //проверка времени работы метода: финиш
+//        System.out.println("spend time = " + (after1 - before1) + "=======================");
+
+        long before11 = System.currentTimeMillis(); //проверка времени работы метода: старт
+        search3.search(start3, s -> s.endsWith(".java")
+//                || s.endsWith(".sample")
+        ).forEach(System.out::println);
+        long after11 = System.currentTimeMillis(); //проверка времени работы метода: финиш
+        System.out.println("spend time = " + (after11 - before11) + "=======================");
+
+        ExtensionPredicate predicate = new ExtensionPredicate(".java");
+        long before22 = System.currentTimeMillis(); //проверка времени работы метода: старт
+        search3.search(start3, predicate).forEach(System.out::println);
+        long after22 = System.currentTimeMillis(); //проверка времени работы метода: старт
+        System.out.println("spend time = " + (after22 - before22) + "=======================");
+
+        long before33 = System.currentTimeMillis(); //проверка времени работы метода: старт
+        search3.files(start3.toString(), s -> s.endsWith(".java")).forEach(System.out::println);
+        long after33 = System.currentTimeMillis(); //проверка времени работы метода: старт
+        System.out.println("spend time = " + (after33 - before33) + "=======================");
+
+//        long before2 = System.currentTimeMillis();
+//        searchFiles1(start2, s -> s.endsWith(".csv")
+//                //|| s.endsWith(".sample")
+//        ).forEach(System.out::println);
+//        long after2 = System.currentTimeMillis();
+//        System.out.println("spend time = " + (after2 - before2) + "========================");
+
+//        Search3 search33 = new Search3();
+//        long before3 = System.currentTimeMillis();
+////        search3.filter(start.toString(), List.of(".csv", ".sample")).forEach(System.out::println);
+//        search33.filter(start2.toString(), List.of(".csv")).forEach(System.out::println);
+//        long after3 = System.currentTimeMillis();
+//        System.out.println("spend time = " + (after3 - before3) + "========================");
     }
 
 //    public static List<Path> search(Path root, String ext) throws IOException {
@@ -33,7 +65,9 @@ public class Search3 {
 //        return searcher.getPaths();
 //    }
 
-    public static List<Path> search(Path root, Predicate<String> condition) throws IOException {
+    /*Метод возвращающий полное название файла (т.е. содержит путь к нему).
+     * Изменив return можно получать только название файлов без пути к ним*/
+    public List<Path> search(Path root, Predicate<String> condition) throws IOException {
 //        SearchFiles3 searcher = new SearchFiles3(p -> p.toFile().getName().endsWith(ext));
         SearchFiles3 searcher = new SearchFiles3(condition);
         Files.walkFileTree(root, searcher);
@@ -41,6 +75,22 @@ public class Search3 {
         return searcher.getFullPaths();
     }
 
+    public List<File> files(String root, Predicate<String> condition) {
+        List<File> result = new ArrayList<>();
+        Queue<File> list = new LinkedList<>();
+        list.offer(new File(root));
+        while (!list.isEmpty()) {
+            File file = list.poll();
+            if (file.isDirectory() && file.canRead()) {
+                list.addAll(Arrays.asList(file.listFiles()));
+            } else if (condition.test(file.getName())) {
+                result.add(file);
+            }
+        }
+        return result;
+    }
+
+    /*Метод возвращающий полное название файла (т.е. содержит путь к нему).*/
     public static List<File> searchFiles1(Path root, Predicate<String> condition) {
         List<File> result = new ArrayList<>();
         Queue<File> list = new LinkedList<>();
@@ -65,9 +115,9 @@ public class Search3 {
             fs[i] = new File(ss[i], this);
         }
         return fs;
-    }
-*/
+        }*/
 
+    /*Метод возвращающий полное название файла (т.е. содержит путь к нему).*/
     public List<File> filter(String parent, List<String> exts) {
         List<File> result = new ArrayList<>();
         List<File> preparedList = getFilesFrom(parent);
@@ -107,8 +157,8 @@ public class Search3 {
 class SearchFiles3 extends SimpleFileVisitor<Path> {
 
     private Predicate<String> condition;
-    private List<Path> paths = new ArrayList<>();
-    private List<Path> fullPaths = new ArrayList<>();
+    private List<Path> paths = new ArrayList<>(); //собирает имя искомого файла
+    private List<Path> fullPaths = new ArrayList<>(); //собирает название файла и путь к нему
 
     public SearchFiles3(Predicate<String> condition) {
         this.condition = condition;
@@ -137,15 +187,54 @@ class SearchFiles3 extends SimpleFileVisitor<Path> {
     private void find(Path path) {
         Path name = path.getFileName();
         if (condition.test(path.toFile().getName())) {
-//        if (condition.test(path.getFileName().toString())) {
+//        if (condition.test(path.getFileName().toString())) { //можно и так записать условие
 
             //Path parent = path.getParent();
             //System.out.println("Directory name:" + parent);
             //Path fileName = path.getFileName();
             //System.out.println("Matching file:" + fileName);
 
-            paths.add(name);
-            fullPaths.add(path);
+            paths.add(name); //собирает только имя файла
+            fullPaths.add(path); //собирает полный путь файла
         }
+    }
+}
+
+class ExtensionPredicate implements Predicate<String> {
+
+    private String pattern;
+
+    ExtensionPredicate(String pattern) {
+        this.pattern = pattern;
+    }
+
+    @Override
+    public boolean test(String string) {
+        return string.endsWith(pattern);
+    }
+}
+
+class ExtensionsPredicates implements Predicate<Path> {
+
+    private List<String> extensions;
+
+    public ExtensionsPredicates(List<String> extensions) {
+        this.extensions = extensions;
+    }
+
+    @Override
+    public boolean test(Path path) {
+        return extensions.stream().anyMatch(ext -> path.toFile().getName().endsWith(ext));
+    }
+
+    public boolean check(Path path, List<String> ext) {
+        boolean result = true;
+        for (String s : ext) {
+            if (path.getFileName().endsWith(s)) {
+                result = false;
+                break;
+            }
+        }
+        return result;
     }
 }

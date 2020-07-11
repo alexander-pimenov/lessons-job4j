@@ -9,23 +9,26 @@ import java.util.List;
 public class Search {
     public static void main(String[] args) throws IOException {
         /*Программа выводит содержимое всей директории.*/
+        /*Используя start или start2 можно получать название файлов с относительным путем (
+        путь от каталога) или абсолютным путем (путь от корневого диска С:\)*/
         Path start = Paths.get(".");
+        Path start2 = Paths.get(".").toAbsolutePath();
 
-        search(start, "csv").forEach(System.out::println);
+        search(start2, "csv").forEach(System.out::println);
         System.out.println("====================");
-        search2(start, "csv").forEach(p -> System.out.println(p.toString()));
+        search2(start2, "csv").forEach(p -> System.out.println(p.toString()));
     }
 
+    /*Метод возвращающий одну позицию: название файла. */
     public static List<Path> search(Path root, String ext) throws IOException {
         SearchFiles searcher = new SearchFiles(ext);
-        //SearchFiles seacher = new SearchFiles(p -> p.toFile().getName().endsWith(ext));
         Files.walkFileTree(root, searcher);
         return searcher.getPaths();
     }
 
+    /*Метод возвращающий две позиции: название файла и путь к нему. */
     public static List<Searcher> search2(Path root, String ext) throws IOException {
         SearchFiles searcher = new SearchFiles(ext);
-        //SearchFiles seacher = new SearchFiles(p -> p.toFile().getName.endsWith(ext));
         Files.walkFileTree(root, searcher);
         return searcher.getSearchers();
     }

@@ -15,12 +15,14 @@ public class Search2 {
     /*Программа выводит содержимое всей директории,
     т.е. ищем файлы по всей директории.*/
         Path start = Paths.get(".");
-
+        long before1 = System.currentTimeMillis(); //проверка времени работы метода: старт
         try {
             search(start, "csv").forEach(System.out::println);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        long after1 = System.currentTimeMillis(); //проверка времени работы метода: финиш
+        System.out.println("spend time = " + (after1 - before1) + "=======================");
     }
 
     public static List<Path> search(Path root, String ext) throws IOException {

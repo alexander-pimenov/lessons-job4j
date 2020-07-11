@@ -21,11 +21,24 @@ public class ZipFile {
             fw.write(line);
             fw.close();
         }
+        /*Настраиваем поток для записи данных в zip-архив:
+         * "multiCompressed.zip" - в какой файл и zip-стрим*/
         FileOutputStream fos = new FileOutputStream("compressed.zip");
         ZipOutputStream zipOut = new ZipOutputStream(fos);
-        FileInputStream fis = new FileInputStream(fileToZip);
-        ZipEntry zipEntry = new ZipEntry(fileToZip.getName());
+
+        /*Создаем объект ZipEntry с именем файла для архивации и добавляем
+         * его в записывающий zip-поток ZipOutputStream*/
+        /* при создании ZipEntry мы используем относительный путь, а не просто имя файла.
+         * Это сделано для того, чтобы при архивации сохранились все дерево директорий,
+         * ведущих к файлу. В случае использования f.getName() в архиве просто будет
+         * плоский список файлов без информации о директориях*/
+        ZipEntry zipEntry = new ZipEntry(fileToZip.getPath());
+        //        ZipEntry zipEntry = new ZipEntry(fileToZip.getName());
+
         zipOut.putNextEntry(zipEntry);
+
+        //вычитываем файл
+        FileInputStream fis = new FileInputStream(fileToZip);
 
         //1-й способ: считываем содержимое файла в массив byte
 //        byte[] buffer = new byte[1024];
@@ -43,5 +56,25 @@ public class ZipFile {
         zipOut.close();
         fis.close();
         fos.close();
+
+        //System.out.println("===2-й метод===");
+        packSingleFile(new File("testForZip.txt"), new File("zipFile.zip"));
+//        packSingleFile(fileToZip, new File("zipFile.zip"));
+
+    }
+
+    /*Метод упаковывающий в архив 1 файл.*/
+    public static void packSingleFile(File source, File target) {
+        try (ZipOutputStream zip = new ZipOutputStream(
+                new BufferedOutputStream(new FileOutputStream(target))
+        )) {
+            zip.putNextEntry(new ZipEntry(source.getPath()));
+            try (BufferedInputStream out = new BufferedInputStream(
+                    new FileInputStream(source))) {
+                zip.write(out.readAllBytes());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
