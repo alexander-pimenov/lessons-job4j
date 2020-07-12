@@ -14,9 +14,11 @@ public class Chat {
     public static void main(String[] args) {
 
         Chat chat = new Chat();
-        chat.chatCall();
+//        chat.chatCall();
+        chat.doChat();
     }
 
+    /*Метод с использованием вечного цикла while (true)*/
     public void chatCall() {
         StringJoiner joiner = new StringJoiner(LN); //указал разделитель
         joiner.add("Добрый день! Я - Бот, Ваш помощник!");
@@ -57,6 +59,50 @@ public class Chat {
                 System.out.println(botMessage);
             }
         }
+    }
+
+    public void doChat() {
+        StringJoiner joiner = new StringJoiner(LN); //указал разделитель
+        joiner.add("Добрый день! Я - Бот, Ваш помощник!");
+        joiner.add("Введите Ваш вопрос.");
+        joiner.add("<<<<< Чтобы остановить помощника, введите «Стоп» и он замолчит.");
+        joiner.add("Введите «Продолжить» и он продолжит общение.");
+        joiner.add("Введите «Закончить» для выхода из программы. >>>>>");
+        System.out.println(joiner);
+
+        boolean chatWithBot = true;
+        String userMessage;
+        String botMessage = "Давайте начнем!";
+        System.out.println(botMessage);
+        writeLog("Bot", botMessage);
+
+        do {
+            userMessage = input.nextLine();
+            writeLog("User", userMessage);
+            if (FINISH.equalsIgnoreCase(userMessage)) {
+                botMessage = "До свидания!";
+                System.out.println(botMessage);
+                writeLog("Bot", botMessage);
+                chatWithBot = false;
+//                break;
+            }
+            if (STOP.equalsIgnoreCase(userMessage)) {
+                chatWithBot = false;
+                botMessage = "Я замолкаю. Если вы хотите продолжить, введите «Продолжить».";
+                System.out.println(botMessage);
+                writeLog("Bot", botMessage);
+            }
+            if (chatWithBot) {
+                botMessage = getPhrase();
+                System.out.println(botMessage);
+                writeLog("Bot", botMessage);
+            }
+            if (CONTINUE.equalsIgnoreCase(userMessage)) {
+                chatWithBot = true;
+                botMessage = "Продолжаем разговор!";
+                System.out.println(botMessage);
+            }
+        } while (!userMessage.equalsIgnoreCase(FINISH));
     }
 
     private void writeLog(String who, String message) {
