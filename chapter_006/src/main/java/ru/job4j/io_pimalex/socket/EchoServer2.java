@@ -7,6 +7,12 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * Сервер работает пока не будет введено Bye или exit.
+ * При вводе Bye вызываем server.close(),
+ * а при вводе exit выходим из цикла с помощью break
+ */
+
 public class EchoServer2 {
     public static void main(String[] args) throws IOException {
 
@@ -34,6 +40,8 @@ public class EchoServer2 {
         try (ServerSocket server = new ServerSocket(9000)) {
             while (!server.isClosed()) {
 //            while (true) { //вариат-2
+                /*server.accept() - ожидает, когда к нему обратиться клиент.
+                Здесь программа переходит в режим ожидания.*/
                 Socket socket = server.accept();
 //                System.out.println("===server.isClosed()==>" + server.isClosed());
                 try (OutputStream out = socket.getOutputStream();
@@ -43,20 +51,24 @@ public class EchoServer2 {
                     String str = in.readLine();
                     System.out.println(str);
 //                    String answer = str.substring(str.lastIndexOf("=") + 1, str.indexOf("HTTP")) + "\r\n";
-                    if (str.startsWith("GET") && str.contains("exit")) {
+                    if (str.startsWith("GET") && (str.contains("msg=exit") || str.contains("msg=Exit"))) {
+                        System.out.println("Server close.");
                         break;
                     }
                     if (str.startsWith("GET") && ((str.contains("msg=Bye")) || str.contains("msg=bye"))) {
                         out.write("Server close.\r\n".getBytes());
                         System.out.println("Server close.");
 //                        break; //вариат-2
-//                        server.close();
-                    } else {
-                        /*Вычитывает оставшиеся строчки из потока in и выводит их*/
-                        while (!(str = in.readLine()).isEmpty()) {
-                            System.out.println(str);
-                        }
+                        server.close();
                     }
+//                    else {
+//                        /*Вычитывает оставшиеся строчки из потока in и выводит их*/
+//                        while (!(str = in.readLine()).isEmpty()) {
+//                            System.out.println("======Количество строк: " + str.length());
+//                            System.out.println(str);
+//                        }
+//                    }
+                    out.write("Hello, dear friend\r\n\\".getBytes());
                     out.write("HTTP/1.1 200 OK\r\n\\".getBytes());
 //                        out.write(answer.getBytes());
                 }

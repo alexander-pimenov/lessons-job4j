@@ -5,6 +5,8 @@ import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /*В этом классе, метод search() выводит только названия файлов,
  * которые мы ищем по соответствующему расширению.
@@ -38,6 +40,11 @@ public class Search2 {
  * нет, то можно просто расширить реализацию класса SimpleFileVisitor,
  * переопределив лишь необходимые методы.*/
 class SearchFiles2 extends SimpleFileVisitor<Path> {
+
+    //классы для работы с регулярными выражениями
+    private Pattern p = null;
+    private Matcher m = null;
+
     private PathMatcher matcher;
     private List<Path> paths = new ArrayList<>();
 

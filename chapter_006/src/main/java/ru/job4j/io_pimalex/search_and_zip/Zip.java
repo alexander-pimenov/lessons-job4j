@@ -18,7 +18,7 @@ import java.util.zip.ZipOutputStream;
  * -e - exclude - исключить файлы *.xml
  * -o - output - во что мы архивируем.
  * <p>
- * У вас должен быть класс new Args(agrs)
+ * У вас должен быть класс new Args(args)
  * <p>
  * с методами directory() extensions() output();
  * <p>

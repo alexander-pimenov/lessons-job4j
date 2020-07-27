@@ -1,4 +1,6 @@
 pom.xml
+p_xml.txt
 checkstyle-checker.xml
 checkstyle-result.xml
 pom.xml
+xml_p.txt

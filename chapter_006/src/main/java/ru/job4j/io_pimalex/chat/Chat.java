@@ -10,6 +10,9 @@ public class Chat {
     private static final String STOP = "стоп";
     private static final String FINISH = "закончить";
     private static final String CONTINUE = "продолжить";
+    private List<String> phrases = new ArrayList<>();
+    private Random rnd = new Random();
+    private List<Entry> listEntry = new ArrayList<>();
 
     public static void main(String[] args) {
 
@@ -57,11 +60,13 @@ public class Chat {
                 chatWithBot = true;
                 botMessage = "Продолжаем разговор!";
                 System.out.println(botMessage);
+                writeLog("Bot", botMessage);
             }
         }
     }
 
     public void doChat() {
+        initPhrases();
         StringJoiner joiner = new StringJoiner(LN); //указал разделитель
         joiner.add("Добрый день! Я - Бот, Ваш помощник!");
         joiner.add("Введите Ваш вопрос.");
@@ -84,7 +89,6 @@ public class Chat {
                 System.out.println(botMessage);
                 writeLog("Bot", botMessage);
                 chatWithBot = false;
-//                break;
             }
             if (STOP.equalsIgnoreCase(userMessage)) {
                 chatWithBot = false;
@@ -101,22 +105,43 @@ public class Chat {
                 chatWithBot = true;
                 botMessage = "Продолжаем разговор!";
                 System.out.println(botMessage);
+                writeLog("Bot", botMessage);
+
             }
         } while (!userMessage.equalsIgnoreCase(FINISH));
+        writeToLogFile();
     }
 
-    private void writeLog(String who, String message) {
-        String log = "log.txt";
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter
-                (log, true))) {
-            bw.write(new Date() + " " + who + ": " + message + LN);
+    private void writeToLogFile() {
+        String log = "log2.txt";
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(
+                log, true))) {
+            for (Entry entry : listEntry) {
+                bw.write(entry.toString());
+                bw.write(LN);
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
-    private String getPhrase() {
-        List<String> phrases = new ArrayList<>();
+    private void writeLog(String who, String message) {
+        listEntry.add(new Entry(new Date(), who, message));
+    }
+
+//    private void writeLog(String who, String message) {
+//        String log = "log.txt";
+//        try (BufferedWriter bw = new BufferedWriter(new FileWriter
+//                (log, true))) {
+//            bw.write(new Date() + " " + who + ": " + message + LN);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+    private List<String> initPhrases() {
         URL text = Chat.class.getResource("/response_phrases.txt");
         try (BufferedReader br = new BufferedReader(new FileReader(
                 text.getFile()))
@@ -130,7 +155,29 @@ public class Chat {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Random rnd = new Random();
+        return phrases;
+    }
+
+    private String getPhrase() {
         return phrases.get(rnd.nextInt(phrases.size()));
+    }
+}
+
+class Entry {
+    private Date date;
+    private String who;
+    private String phrase;
+
+    public Entry(Date date, String who, String phrase) {
+        this.date = date;
+        this.who = who;
+        this.phrase = phrase;
+    }
+
+    @Override
+    public String toString() {
+        return date
+                + ", < " + who + " >"
+                + " : '" + phrase + '\'';
     }
 }
