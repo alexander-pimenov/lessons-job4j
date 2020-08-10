@@ -6,6 +6,8 @@ import java.util.regex.Pattern;
 
 public class Main {
     public static void main(String[] args) {
+
+
         Scanner scanner = new Scanner(System.in);
         String s;
         do {
@@ -23,6 +25,7 @@ public class Main {
                 System.out.println("Вы выбрали продолжать. Продолжаем.");
             }
         } while (!s.equalsIgnoreCase("n"));//выход если в параметре получаем false
+
 //        System.out.println(test("pizza"));
 //        System.out.println(test("@pizza"));
 //        System.out.println(test("pizza3"));

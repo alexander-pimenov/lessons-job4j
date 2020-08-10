@@ -46,12 +46,6 @@ public class ArgsParser {
     public boolean valid() {
         boolean result = true;
         List<String> argsList = Arrays.asList(args);
-//        if (!argsList.contains("-d")
-//                && !argsList.contains("-n")
-//                && !argsList.contains("-o")) {
-//            System.out.println("Args is not valid.");
-//            result = false;
-//        }
         if (!argsList.contains("-d")) {
             System.out.println("Args is not valid. Не введена директория поиска файлов.");
             result = false;

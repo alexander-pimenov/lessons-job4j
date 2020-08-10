@@ -34,10 +34,10 @@ public class SearchApp {
                     argsParser = new ArgsParser(split);
 //            argsParser = new ArgsParser(args);
                     List<Path> files = SearchAndSave.search(Paths.get(argsParser.getDirectory()), argsParser.flagCheck());
-//                    Search.save(files, argsParser.getOutput());
+//                    SearchAndSave.save(files, argsParser.getOutput());
                     SearchAndSave.writeResult(files, argsParser.getOutput());
 
-//                    Search.search(Paths.get(argsParser.getDirectory()), argsParser.flagCheck())
+//                    SearchAndSave.search(Paths.get(argsParser.getDirectory()), argsParser.flagCheck())
 //                            .forEach(System.out::println);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -86,3 +86,11 @@ public class SearchApp {
 }
 
 //-d c:/projects/lessons-job4j/chapter_001 -n B.+ -r -o log_found_files_chapter_004.txt
+//
+// комментарий для себя:
+//-d c:/projects/job4j/chapter_001 -n B.+ -r -o log_found_files_chapter_001.txt
+//есть проблемы с обработкой регулярных выражений, нужно исправлять, но есть и положительный результат с regEx:
+// A*.java, *.xml, M.+,
+// *.* -(запись всех файлов папки) - попадают абсолютно все файлы, поскольку набор произвольных символов указывается как для имени, так и для расширения файла.
+// .+ -(запись всех файлов папки)
+// bo*.* - ищет все файлы начинающиеся на bo и потом какие-то символы и с любым расширением.
