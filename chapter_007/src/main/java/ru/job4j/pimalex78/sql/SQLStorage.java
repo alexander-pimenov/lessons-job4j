@@ -5,6 +5,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+/*В этом классе показаны примеры подключения к БД с помощью JDBC, Чтение данных из БД,
+ * Добавление данных, Изменение данных, Удаление данных.*/
 
 public class SQLStorage {
     private static final Logger LOG = LoggerFactory.getLogger(SQLStorage.class);
@@ -14,7 +19,7 @@ public class SQLStorage {
         String username = "postgres";
         String password = "qwerty";
 
-        //А можно записать одной строкой, только одним url, в котором будет и BD и name и password:
+        //А можно записать одной строкой, только одним url, в котором будет и DB и name и password:
         //String url = "jdbc:postgresql://localhost:5432/tracker?user=postgres&password=qwerty&ssl=true";
 
         Connection conn = null;
@@ -33,14 +38,28 @@ public class SQLStorage {
             //Объект ResultSet это итератор, а не коллекция,
             //который помагает проходиться по строкам таблицы.
             ResultSet rs = st.executeQuery("SELECT * FROM product");
+//            while (rs.next()) {
+//                System.out.print("Column 'name' returned: ");
+//                //Всегда используй указание на имя колонки, а не индекс колонки
+//                //чтобы избежать ошибок:
+//                System.out.println(rs.getString("name"));
+//                System.out.println("------------------------------");
+//                System.out.println(String.format("%s, %d рубл.", rs.getString("name"),
+//                        rs.getInt("price")));
+//                System.out.println("==============================");
+//            }
+
             while (rs.next()) {
-                System.out.print("Column 'name' returned: ");
                 //Всегда используй указание на имя колонки, а не индекс колонки
                 //чтобы избежать ошибок:
-                System.out.println(rs.getString("name"));
-                System.out.println("------------------------------");
-                System.out.println(String.format("%s, %d рубл.", rs.getString("name"),
-                        rs.getInt("price")));
+                System.out.println(String.format("id: %d, name: %s, категория: %d, срок годности: %s, цена: %d рубл.",
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getInt("type_id"),
+                        rs.getDate("expired_date"),
+                        rs.getInt("price")
+                        )
+                );
                 System.out.println("==============================");
             }
             //Обязательно все ресурсы нужно закрывать.
@@ -64,7 +83,7 @@ public class SQLStorage {
             }
         }
 
-        System.out.println("#### Пример работы с PreparedStatement ####\r\n");
+        System.out.println("\n#### Пример работы с PreparedStatement ####\r\n");
 
         /*Рассмотрим пример работы с динамическими запросами к БД.
          * Т.е. будем использовать prepareStatement*/
@@ -109,7 +128,7 @@ public class SQLStorage {
             }
         }
 
-        System.out.println("#### Пример работы с PreparedStatement, Добавление данных. ####\r\n");
+        System.out.println("\n#### Пример работы с PreparedStatement, Добавление данных. ####\r\n");
         try {
             conn = DriverManager.getConnection(url, username, password);
             //Когда мы добавим данные в таблицу product нам хорошо бы получить назад
@@ -120,17 +139,32 @@ public class SQLStorage {
             //Установим параметры
             st.setString(1, "Картофель");
             st.setInt(2, 5);
-            st.setDate(3, new Date(System.currentTimeMillis()));
+//            st.setDate(3, new Date(2020, 10, 25)); //устаревший способ, не верно выводит дату. Не использовать!!!
+//            st.setDate(3, new Date(System.currentTimeMillis())); //вставляем текущую дату
+//            st.setDate(3, getCurrentDate()); //вставляем текущую дату
+            st.setDate(3, getOnlyDate("2020-12-25")); //вставляем любую дату
             st.setInt(4, 27);
 
             //Выполним запрос к БД - executeUpdate
+            //не executeQuery(), а executeUpdate()
             st.executeUpdate();
             ResultSet generatedKeys = st.getGeneratedKeys();
             if (generatedKeys.next()) {
                 System.out.println("Значение id Картофеля: " + generatedKeys.getInt("id"));
             }
+
+            //Выведем все записи с name Картофель
+            final PreparedStatement preparedStatement = conn.prepareStatement("select * from product as p WHERE p.name = ? ");
+            preparedStatement.setString(1, "Картофель");
+            final ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                System.out.println(String.format("%s, цена - %d рубл, %s", resultSet.getString("name"), resultSet.getInt("price"),
+                        resultSet.getDate("expired_date")));
+            }
+
             //Обязательно все ресурсы нужно закрывать.
             generatedKeys.close();
+            preparedStatement.close();
             st.close();
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
@@ -144,7 +178,7 @@ public class SQLStorage {
             }
         }
 
-        System.out.println("#### Пример работы с PreparedStatement, Обновление данных. ####\r\n");
+        System.out.println("\n#### Пример работы с PreparedStatement, Обновление данных. ####\r\n");
         try {
             conn = DriverManager.getConnection(url, username, password);
             //Когда мы добавим данные в таблицу product нам хорошо бы получить назад
@@ -174,7 +208,7 @@ public class SQLStorage {
             }
         }
 
-        System.out.println("#### Пример работы с PreparedStatement, Удаление данных. ####\r\n");
+        System.out.println("\n#### Пример работы с PreparedStatement, Удаление данных. ####\r\n");
         try {
             conn = DriverManager.getConnection(url, username, password);
             //Когда мы добавим данные в таблицу product нам хорошо бы получить назад
@@ -182,7 +216,7 @@ public class SQLStorage {
             //Поэтому добавим специальный ключ
             PreparedStatement st = conn.prepareStatement("DELETE FROM product WHERE id=?");
             //Установим параметры
-            st.setInt(1, 28); //удалим элемент с индексом 28
+            st.setInt(1, 31); //удалим элемент с индексом 28
 
             //Выполним запрос к БД - executeUpdate
             st.executeUpdate();
@@ -202,7 +236,34 @@ public class SQLStorage {
                 }
             }
         }
+    }
 
+    /*Метод возвращающий java.sql.Date и его вставляем в таблицу БД.
+     * java.util.Date и java.sql.Date не нужно путать.
+     * Передаем текущую дату.*/
+    private static java.sql.Date getCurrentDate() {
+        java.util.Date today = new java.util.Date();
+        return new java.sql.Date(today.getTime());
+    }
 
+    /*Метод возвращающий java.sql.Date и его вставляем в таблицу БД.
+     * java.util.Date и java.sql.Date не нужно путать.
+     * Передаем не текущую дату, а какую нужно в формате "yyyy-MM-dd"*/
+    private static java.sql.Date getOnlyDate(String strDate) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date date = null;
+        java.sql.Date sqlDate = null;
+        try {
+            if (strDate != null) {
+                date = sdf.parse(strDate);
+                sqlDate = new java.sql.Date(date.getTime());
+            } else {
+                //Если дата не введена, то передадим текущую дату
+                sqlDate = new java.sql.Date(System.currentTimeMillis());
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return sqlDate;
     }
 }
