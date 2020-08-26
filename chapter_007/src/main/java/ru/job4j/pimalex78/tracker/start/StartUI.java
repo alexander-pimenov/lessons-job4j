@@ -1,5 +1,7 @@
 package ru.job4j.pimalex78.tracker.start;
 
+import ru.job4j.pimalex78.tracker.sql.Store;
+
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -17,7 +19,8 @@ public class StartUI {
     /**
      * Хранилище заявок.
      */
-    private final MemTracker tracker;
+    private final Store tracker;
+//    private final MemTracker tracker;
 
     private final Consumer<String> output;
 
@@ -28,11 +31,17 @@ public class StartUI {
      * @param tracker хранилище заявок.
      * @param output  с помощью Consumer выбираем метод вывода информации
      */
-    public StartUI(Input input, MemTracker tracker, Consumer<String> output) {
+    public StartUI(Input input, Store tracker, Consumer<String> output) {
         this.input = input;
         this.tracker = tracker;
         this.output = output;
     }
+
+// Старый вариант
+//    public StartUI(Input input, MemTracker tracker) {
+//        this.input = input;
+//        this.tracker = tracker;
+//    }
 
     /**
      * Основой цикл программы.
@@ -67,8 +76,22 @@ public class StartUI {
     public static void main(String[] args) {
 
         new StartUI(new ValidateInput(
-                new ConsoleInput()), new MemTracker(), System.out::println).init();
+                new ConsoleInput()),
+                new MemTracker(), System.out::println).init();
 
+
+//        Input validate = new ValidateInput(
+//                new ConsoleInput()
+//        );
+//        try (Store tracker = new SqlTracker()) {
+//            tracker.init();
+//            UserAction[] actions = {
+//                    new CreateAction()
+//            };
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 }
 

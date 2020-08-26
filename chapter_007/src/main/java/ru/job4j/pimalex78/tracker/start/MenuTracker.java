@@ -1,5 +1,7 @@
 package ru.job4j.pimalex78.tracker.start;
 
+import ru.job4j.pimalex78.tracker.sql.Store;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -19,16 +21,18 @@ public class MenuTracker {
      * хранит ссылку на объект
      * из хранилища Tracker
      */
-    private MemTracker tracker;
+    private Store tracker;
+//    private MemTracker tracker;
     /**
      * хранит ссылку на список типа UserAction.
      * это те действия, которые описаны в нашей системе
      */
     private List<UserAction> actions = new ArrayList<>();
 
+    //с помощью Consumer выбираем метод вывода информации
     private final Consumer<String> output;
 
-    List<Integer> range = new ArrayList<>();
+     List<Integer> range = new ArrayList<>();
 
     /**
      * Конструктор.
@@ -37,7 +41,7 @@ public class MenuTracker {
      * @param tracker объект типа Tracker
      * @param output
      */
-    public MenuTracker(Input input, MemTracker tracker, Consumer<String> output) {
+    public MenuTracker(Input input, Store tracker, Consumer<String> output) {
         this.input = input;
         this.tracker = tracker;
         this.output = output;

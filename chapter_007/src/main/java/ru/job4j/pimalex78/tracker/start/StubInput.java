@@ -39,7 +39,7 @@ public class StubInput implements Input {
 
     @Override
     public int ask(String question, List<Integer> range) {
-        int key = Integer.valueOf(this.value.get(this.position++));
+        int key = Integer.parseInt(this.value.get(this.position++));
         boolean exist = false; //по умолчанию считаем, что данные введены с ошибкой
         // значение проходит через диапазон меню
         for (int value : range) {

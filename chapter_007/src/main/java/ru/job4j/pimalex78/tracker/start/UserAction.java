@@ -1,5 +1,7 @@
 package ru.job4j.pimalex78.tracker.start;
 
+import ru.job4j.pimalex78.tracker.sql.Store;
+
 import java.util.function.Consumer;
 
 public interface UserAction {
@@ -17,7 +19,7 @@ public interface UserAction {
      * @param tracker объект типа Tracker
      * @param output  с помощью Consumer выбираем метод вывода информации
      */
-    void execute(Input input, MemTracker tracker, Consumer<String> output);
+    void execute(Input input, Store tracker, Consumer<String> output);
 
     /**
      * Метод возвращает информацию о данном пункте меню.

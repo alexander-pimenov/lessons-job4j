@@ -1,6 +1,7 @@
 package ru.job4j.pimalex78.tracker.start;
 
 import ru.job4j.pimalex78.tracker.models.Item;
+import ru.job4j.pimalex78.tracker.sql.Store;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -11,7 +12,7 @@ public class FindItemsByName extends BaseAction {
     }
 
     @Override
-    public void execute(Input input, MemTracker tracker, Consumer<String> output) {
+    public void execute(Input input, Store tracker, Consumer<String> output) {
 
         System.out.println("------------ Find task by Name --------------");
         String name = input.ask("Please, enter the item's name that you want to find :");

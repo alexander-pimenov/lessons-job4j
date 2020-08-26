@@ -1,6 +1,7 @@
 package ru.job4j.pimalex78.tracker.start;
 
 import ru.job4j.pimalex78.tracker.models.Item;
+import ru.job4j.pimalex78.tracker.sql.Store;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +10,11 @@ import java.util.Random;
 
 /**
  * MemTracker - данные хранятся в памяти.
+ *
  * @version $Id$
  * @since 0.1
  */
-public class MemTracker {
+public class MemTracker implements Store {
 
     /**
      * Поле список (ArrayList) для хранения заявок
@@ -46,6 +48,7 @@ public class MemTracker {
      *
      * @param item новая заявка
      */
+    @Override
     public Item add(Item item) {
         item.setId(this.generateId());
         this.items.add(item);
@@ -65,6 +68,7 @@ public class MemTracker {
      * @param id,   id items элемента
      * @param item, измененный
      */
+    @Override
     public boolean replace(String id, Item item) {
         boolean result = false;
         for (int index = 0; index < items.size(); index++) {
@@ -84,8 +88,7 @@ public class MemTracker {
      *
      * @param id, id items элемента
      */
-
-
+    @Override
     public boolean delete(String id) {
         boolean result = false;
         ListIterator<Item> current = this.items.listIterator();
@@ -117,6 +120,7 @@ public class MemTracker {
      *
      * @return items
      */
+    @Override
     public List<Item> findAll() {
         return new ArrayList<>(items);
     }
@@ -128,6 +132,7 @@ public class MemTracker {
      * @param key, имя items элемента
      * @return list, список найденных элементов
      */
+    @Override
     public List<Item> findByName(String key) {
         List<Item> list = new ArrayList<>();
         for (Item item : items) {
@@ -150,7 +155,7 @@ public class MemTracker {
      *
      * @return item
      */
-
+    @Override
     public Item findById(String id) {
         Item result = null;
         for (Item item : items) {
@@ -161,4 +166,13 @@ public class MemTracker {
         }
         return result;
     }
+
+    @Override
+    public void close() {
+//        if (cn != null) {
+//            cn.close();
+//        }
+        throw new UnsupportedOperationException("Unsupported operation");
+    }
+
 }

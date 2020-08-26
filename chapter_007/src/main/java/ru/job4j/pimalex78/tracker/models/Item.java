@@ -19,6 +19,21 @@ public class Item {
         this.time = time;
     }
 
+    public Item(String name){
+        this.name = name;
+    }
+
+    public Item(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public Item(String id, String name, String desc) {
+        this.id = id;
+        this.name = name;
+        this.desc = desc;
+    }
+
     public String getId() {
         return id;
     }

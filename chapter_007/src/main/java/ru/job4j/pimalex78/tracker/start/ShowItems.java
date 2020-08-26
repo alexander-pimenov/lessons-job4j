@@ -1,6 +1,7 @@
 package ru.job4j.pimalex78.tracker.start;
 
 import ru.job4j.pimalex78.tracker.models.Item;
+import ru.job4j.pimalex78.tracker.sql.Store;
 
 import java.util.function.Consumer;
 
@@ -10,7 +11,7 @@ public class ShowItems extends BaseAction {
     }
 
     @Override
-    public void execute(Input input, MemTracker tracker, Consumer<String> output) {
+    public void execute(Input input, Store tracker, Consumer<String> output) {
 
         System.out.println("-------------- Show all items --------------");
         for (Item item : tracker.findAll()) { //(Item item : items)

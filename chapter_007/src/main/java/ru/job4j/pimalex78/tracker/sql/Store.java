@@ -10,7 +10,7 @@ import java.util.List;
  * Т.к. нам нужно обеспечить закрытие ресурса.
  */
 public interface Store extends AutoCloseable {
-    void init();
+    //void init();
 
     Item add(Item item);
 
