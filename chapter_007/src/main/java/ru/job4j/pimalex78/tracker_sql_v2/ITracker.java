@@ -1,4 +1,4 @@
-package ru.job4j.pimalex78.tracker_sql;
+package ru.job4j.pimalex78.tracker_sql_v2;
 
 import java.util.ArrayList;
 import java.util.List;
