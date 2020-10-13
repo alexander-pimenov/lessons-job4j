@@ -25,7 +25,8 @@
 			<properties>
 				<db.url>jdbc:postgresql://127.0.0.1:5432/tracker</db.url>
 				<db.username>postgres</db.username>
-				<db.password>Qqqqqqqq1</db.password>
+				<db.password>qwerty</db.password>
+				<!--<db.password>Qqqqqqqq1</db.password>-->
 				<db.driver>org.postgresql.Driver</db.driver>
 			</properties>
 		</profile>
@@ -34,7 +35,8 @@
 			<properties>
 				<db.url>jdbc:postgresql://127.0.0.1:5432/tracker</db.url>
 				<db.username>postgres</db.username>
-				<db.password>Qqqqqqqq1</db.password>
+				<db.password>qwerty</db.password>
+<!--				<db.password>Qqqqqqqq1</db.password>-->
 				<db.driver>org.postgresql.Driver</db.driver>
 			</properties>
 		</profile>
@@ -330,9 +332,10 @@
 		<dependency>
 			<groupId>org.apache.ant</groupId>
 			<artifactId>ant</artifactId>
-			<version>1.10.7</version>
+			<version>1.10.8</version>
 		</dependency>
-
+		
+		
 		<dependency>
 			<groupId>info.picocli</groupId>
 			<artifactId>picocli</artifactId>

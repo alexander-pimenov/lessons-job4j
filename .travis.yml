@@ -15,6 +15,7 @@ notifications:
       -pimalex1978@yandex.ru
     on_success: never # default: change
     on_failure: always # default: always
+
 jdk: -openjdk11
 
 services:

@@ -8,8 +8,12 @@ import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-/*В этом классе показаны примеры подключения к БД с помощью JDBC, Чтение данных из БД,
- * Добавление данных, Изменение данных, Удаление данных.*/
+/**
+ * В этом классе показаны примеры подключения к БД с помощью JDBC,
+ * Чтение данных из БД,
+ * Добавление данных,
+ * Изменение данных, Удаление данных.
+ */
 
 public class SQLStorage {
     private static final Logger LOG = LoggerFactory.getLogger(SQLStorage.class);
