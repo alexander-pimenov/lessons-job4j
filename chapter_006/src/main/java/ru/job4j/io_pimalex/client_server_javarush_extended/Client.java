@@ -19,7 +19,7 @@ public class Client {
      */
 
     public static void main(String[] args) {
-        new ClientSomthing(ipAddr, port);
+        new ClientSomething(ipAddr, port);
     }
 }
 
@@ -27,7 +27,7 @@ public class Client {
  * создание клиента со всеми необходимыми утилитами, точка входа в программу в классе Client
  */
 
-class ClientSomthing {
+class ClientSomething {
 
     private Socket socket;
     private BufferedReader in; // поток чтения из сокета
@@ -47,7 +47,7 @@ class ClientSomthing {
      * @param port
      */
 
-    public ClientSomthing(String addr, int port) {
+    public ClientSomething(String addr, int port) {
         this.addr = addr;
         this.port = port;
         try {
@@ -66,7 +66,7 @@ class ClientSomthing {
         } catch (IOException e) {
             // Сокет должен быть закрыт при любой
             // ошибке, кроме ошибки конструктора сокета:
-            ClientSomthing.this.downService();
+            ClientSomething.this.downService();
         }
         // В противном случае сокет будет закрыт
         // в методе run() нити.
@@ -111,14 +111,14 @@ class ClientSomthing {
             try {
                 while (true) {
                     str = in.readLine(); // ждем сообщения с сервера
-                    if (str.equals("stop")) {
-                        ClientSomthing.this.downService(); // харакири
-                        break; // выходим из цикла если пришло "stop"
+                    if (str.equalsIgnoreCase("stop")||str.equalsIgnoreCase("exit")) {
+                        ClientSomething.this.downService(); // харакири
+                        break; // выходим из цикла если пришло "stop" или "exit"
                     }
                     System.out.println(str); // пишем сообщение с сервера на консоль
                 }
             } catch (IOException e) {
-                ClientSomthing.this.downService();
+                ClientSomething.this.downService();
             }
         }
     }
@@ -137,14 +137,14 @@ class ClientSomthing {
                     userWord = inputUser.readLine(); // сообщения с консоли
                     if (userWord.equals("stop")) {
                         out.write("stop" + "\n");
-                        ClientSomthing.this.downService(); // харакири
+                        ClientSomething.this.downService(); // харакири
                         break; // выходим из цикла если пришло "stop"
                     } else {
                         out.write("(" + dtime + ") " + nickname + ": " + userWord + "\n"); // отправляем на сервер
                     }
                     out.flush(); // чистим
                 } catch (IOException e) {
-                    ClientSomthing.this.downService(); // в случае исключения тоже харакири
+                    ClientSomething.this.downService(); // в случае исключения тоже харакири
 
                 }
 

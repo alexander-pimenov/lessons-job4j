@@ -3,7 +3,6 @@ package ru.job4j.dropbox;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.v2.DbxClientV2;
-import com.dropbox.core.v2.files.FileMetadata;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -24,7 +23,8 @@ import java.io.InputStream;
  * и в этом же пакете, но в папке "lib" берем файл "jackson-core-2.7.4.jar".
  * Это две библиотеки с кодом на Java, которые позволят нам подключиться к Dropbox.
  * Нужно в корне проекта создать папку lib (библиотека) и эту папку положить эти два файла.
- * (Это все делаем через IntelliJ IDEA: создаем папку lib (выбираем New->Directory->lib), с компьтера в нее перетаскиваем нужные нам два файла)
+ * (Это все делаем через IntelliJ IDEA: создаем папку lib (выбираем New->Directory->lib),
+ * с компьтера в нее перетаскиваем нужные нам два файла)
  * Затем выделяем эти файлы, кликаем правой клавишей мыши и выбираем "Add as Library...", т.е. подключаем их
  * к проекту. Появится окошко "Create Library", кликаем ОК. И все, подключение произошло.
  * <p>
